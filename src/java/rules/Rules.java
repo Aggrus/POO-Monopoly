@@ -1,4 +1,4 @@
-package model;
+package rules;
 
 
 /**
@@ -7,7 +7,7 @@ package model;
  * @author gugaz
  * @version 1.0 Created on May 8, 2022
  */
-class House
+public class Rules
 {
 
 }
