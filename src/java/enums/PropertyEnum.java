@@ -1,13 +1,14 @@
-package model.rules;
-
+package enums;
 
 /**
  * <p>
  * </p>
+ * 
  * @author gugaz
  * @version 1.0 Created on May 8, 2022
  */
-public class Rules
+public enum PropertyEnum
 {
+	GET, GIVE, NONE;
 
 }

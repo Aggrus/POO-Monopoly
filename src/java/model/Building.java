@@ -16,6 +16,30 @@ class Building
 	 * <p>
 	 * </p>
 	 *
+	 * @return Returns the boardPosition.
+	 * @see #boardPosition
+	 */
+	public Integer getBoardPosition()
+	{
+		return this.boardPosition;
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @return Returns the buildingType.
+	 * @see #buildingType
+	 */
+	public BuildingEnum getBuildingType()
+	{
+		return this.buildingType;
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
 	 * @return Returns the owner.
 	 * @see #owner
 	 */
@@ -70,6 +94,32 @@ class Building
 	public Property getProperty()
 	{
 		return this.property;
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @param boardPosition
+	 *            The boardPosition to set.
+	 * @see #boardPosition
+	 */
+	public void setBoardPosition( final Integer boardPosition )
+	{
+		this.boardPosition = boardPosition;
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @param buildingType
+	 *            The buildingType to set.
+	 * @see #buildingType
+	 */
+	public void setBuildingType( final BuildingEnum buildingType )
+	{
+		this.buildingType = buildingType;
 	}
 
 	/**
@@ -137,27 +187,7 @@ class Building
 		this.property = property;
 	}
 
-	/**
-	 * <p>
-	 * </p>
-	 * @return Returns the buildingType.
-	 * @see #buildingType
-	 */
-	public BuildingEnum getBuildingType()
-	{
-		return buildingType;
-	}
-
-	/**
-	 * <p>
-	 * </p>
-	 * @param buildingType The buildingType to set.
-	 * @see #buildingType
-	 */
-	public void setBuildingType( BuildingEnum buildingType )
-	{
-		this.buildingType = buildingType;
-	}
+	private Integer boardPosition;
 
 	private BuildingEnum buildingType;
 

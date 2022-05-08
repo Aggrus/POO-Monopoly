@@ -3,7 +3,7 @@ package model;
 /**
  * <p>
  * </p>
- * 
+ *
  * @author gugaz
  * @version 1.0 Created on May 8, 2022
  */
@@ -22,6 +22,12 @@ class Card
 		return this.description;
 	}
 
+	public Long getGainOrLoss()
+	{
+		final Long amount = this.isLuck ? this.money : ( this.money * -1 );
+		return amount;
+	}
+
 	/**
 	 * <p>
 	 * </p>
@@ -32,6 +38,18 @@ class Card
 	public Integer getId()
 	{
 		return this.id;
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 * 
+	 * @return Returns the money.
+	 * @see #money
+	 */
+	public Long getMoney()
+	{
+		return this.money;
 	}
 
 	/**
@@ -85,10 +103,25 @@ class Card
 		this.isLuck = isLuck;
 	}
 
+	/**
+	 * <p>
+	 * </p>
+	 * 
+	 * @param money
+	 *            The money to set.
+	 * @see #money
+	 */
+	public void setMoney( final Long money )
+	{
+		this.money = money;
+	}
+
 	private String description;
 
 	private Integer id;
 
 	private boolean isLuck;
+
+	private Long money;
 
 }
