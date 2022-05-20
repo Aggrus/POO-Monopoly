@@ -1,6 +1,6 @@
 package model;
 
-import enums.ColorEnum;
+import enums.PlayerColorEnum;
 
 /**
  * <p>
@@ -34,6 +34,18 @@ class Player
 	public Integer getBoardPosition()
 	{
 		return this.boardPosition;
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @return Returns the color.
+	 * @see #color
+	 */
+	public PlayerColorEnum getColor()
+	{
+		return this.color;
 	}
 
 	/**
@@ -76,6 +88,18 @@ class Player
 	 * <p>
 	 * </p>
 	 *
+	 * @return Returns the roundTrips.
+	 * @see #roundTrips
+	 */
+	public Integer getRoundTrips()
+	{
+		return this.roundTrips;
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
 	 * @return Returns the freeRide.
 	 * @see #freeRide
 	 */
@@ -88,12 +112,42 @@ class Player
 	 * <p>
 	 * </p>
 	 *
+	 * @return Returns the inGame.
+	 * @see #inGame
+	 */
+	public boolean isInGame()
+	{
+		return this.inGame;
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
 	 * @return Returns the inPriosion.
-	 * @see #inPriosion
+	 * @see #inPrision
 	 */
 	public boolean isInPriosion()
 	{
-		return this.inPriosion;
+		return this.inPrision;
+	}
+
+	public void loseMoney( final Long amount )
+	{
+		setMoney( getMoney() - amount );
+		playerStatus();
+		if ( !isInGame() )
+		{
+			Game.getPlayerList().remove( this );
+		}
+	}
+
+	public void playerStatus()
+	{
+		if ( getMoney() <= 0 )
+		{
+			setInGame( false );
+		}
 	}
 
 	/**
@@ -113,6 +167,19 @@ class Player
 	 * <p>
 	 * </p>
 	 *
+	 * @param color
+	 *            The color to set.
+	 * @see #color
+	 */
+	public void setColor( final PlayerColorEnum color )
+	{
+		this.color = color;
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
 	 * @param freeRide
 	 *            The freeRide to set.
 	 * @see #freeRide
@@ -126,13 +193,26 @@ class Player
 	 * <p>
 	 * </p>
 	 *
+	 * @param inGame
+	 *            The inGame to set.
+	 * @see #inGame
+	 */
+	private void setInGame( final boolean inGame )
+	{
+		this.inGame = inGame;
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
 	 * @param inPriosion
 	 *            The inPriosion to set.
-	 * @see #inPriosion
+	 * @see #inPrision
 	 */
 	public void setInPriosion( final boolean inPriosion )
 	{
-		this.inPriosion = inPriosion;
+		this.inPrision = inPriosion;
 	}
 
 	/**
@@ -177,37 +257,32 @@ class Player
 	/**
 	 * <p>
 	 * </p>
-	 * @return Returns the color.
-	 * @see #color
+	 *
+	 * @param roundTrips
+	 *            The roundTrips to set.
+	 * @see #roundTrips
 	 */
-	public ColorEnum getColor()
+	public void setRoundTrips( final Integer roundTrips )
 	{
-		return color;
-	}
-
-	/**
-	 * <p>
-	 * </p>
-	 * @param color The color to set.
-	 * @see #color
-	 */
-	public void setColor( ColorEnum color )
-	{
-		this.color = color;
+		this.roundTrips = roundTrips;
 	}
 
 	private Integer boardPosition;
 
-	private ColorEnum color;
+	private PlayerColorEnum color;
 
 	private boolean freeRide;
 
-	private boolean inPriosion;
+	private boolean inGame;
+
+	private boolean inPrision;
 
 	private Long money;
 
 	private Double positionX;
 
 	private Double positionY;
+
+	private Integer roundTrips;
 
 }

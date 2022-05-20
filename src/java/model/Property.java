@@ -1,150 +1,246 @@
 package model;
 
-import enums.PropertyEnum;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
+
+import Exception.IllegalRuleException;
+import Exception.WrongPlayerException;
+import enums.BuildingEnum;
+import enums.TileColorEnum;
+import enums.TileEnum;
 
 /**
  * <p>
  * </p>
  *
  * @author gugaz
- * @version 1.0 Created on May 8, 2022
+ * @version 1.0 Created on May 17, 2022
  */
 class Property
+	extends AbstractTile
 {
 
-	/**
-	 * <p>
-	 * </p>
-	 * 
-	 * @return Returns the boardPosition.
-	 * @see #boardPosition
-	 */
-	public Integer getBoardPosition()
+	public Property()
 	{
-		return this.boardPosition;
+		setSpecialProperty( TileEnum.NONE );
+		setCanPurchase( true );
+		setOwner( null );
+	}
+
+	public Property( final Long rent, final TileColorEnum color, final Long[] rentIncreases )
+	{
+		setRentIncreases( rentIncreases );
+		setGorup( color );
+		setRent( rent );
+		setCanPurchase( true );
+	}
+
+	private void addBuilding( final Player player, final Building building )
+		throws WrongPlayerException
+	{
+		if ( getOwner().equals( player ) )
+		{
+			if ( checkAddBuilding( building ) )
+			{
+				this.buildings.add( building );
+			}
+			else
+			{
+				throw new IllegalRuleException( "Property owner does not own all properties of this group!" );
+			}
+		}
+		else
+		{
+			throw new WrongPlayerException();
+		}
+		increaseRent();
+	}
+
+	public boolean buyBuilding( final Player player, final Building building )
+	{
+		try
+		{
+			addBuilding( player, building );
+		}
+		catch ( final WrongPlayerException e )
+		{
+			return false;
+		}
+		player.loseMoney( building.getPrice() );
+		return true;
+
+	}
+
+	public void buyProperty( final Player player )
+		throws IllegalRuleException
+	{
+		if ( null != getOwner() )
+		{
+			throw new IllegalRuleException( "Propriedade já tem dono!" );
+		}
+		player.loseMoney( getValue() );
+		setOwner( player );
+
+	}
+
+	private boolean canBuild()
+	{
+		final Stream<Property> thisGroup = Game
+			.getProperties()
+			.stream()
+			.filter( t -> t.getGorup().equals( getGorup() ) );
+		return thisGroup.allMatch( t -> getBuildings().size() <= t.getBuildings().size() );
+	}
+
+	private boolean canBuildHotel()
+	{
+
+		return ( ( getBuildings().size() > 1 ) && !hasHotel() );
+	}
+
+	private boolean checkAddBuilding( final Building building )
+		throws IllegalRuleException
+	{
+		boolean canAddBuilding = canBuild() && checkGroupOwner();
+		if ( building.getBuildingType().equals( BuildingEnum.HOTEL ) )
+		{
+			if ( !canBuildHotel() )
+			{
+				canAddBuilding = canAddBuilding && canBuildHotel();
+			}
+		}
+		else
+		{
+			throw new IllegalRuleException( "Não pode adicionar construção!" );
+		}
+		return canAddBuilding;
+	}
+
+	private boolean checkGroupOwner()
+	{
+		final Player owner = getOwner();
+		final Stream<Property> thisGroup = Game
+			.getProperties()
+			.stream()
+			.filter( t -> t.getGorup().equals( getGorup() ) );
+
+		return ( thisGroup.allMatch( t -> t.getOwner().equals( owner ) ) );
 	}
 
 	/**
 	 * <p>
 	 * </p>
 	 *
-	 * @return Returns the positionX.
-	 * @see #positionX
+	 * @return Returns the buildings.
+	 * @see #buildings
 	 */
-	public Double getPositionX()
+	public List<Building> getBuildings()
 	{
-		return this.positionX;
+		return this.buildings;
 	}
 
 	/**
 	 * <p>
 	 * </p>
 	 *
-	 * @return Returns the positionY.
-	 * @see #positionY
+	 * @return Returns the rent.
+	 * @see #rent
 	 */
-	public Double getPositionY()
+	public Long getRent()
 	{
-		return this.positionY;
+		return this.rent;
 	}
 
 	/**
 	 * <p>
 	 * </p>
 	 *
-	 * @return Returns the specialProperty.
-	 * @see #specialProperty
+	 * @return Returns the rentIncreases.
+	 * @see #rentIncreases
 	 */
-	public PropertyEnum getSpecialProperty()
+	public Long[] getRentIncreases()
 	{
-		return this.specialProperty;
+		return this.rentIncreases;
+	}
+
+	private boolean hasHotel()
+	{
+		return getBuildings().stream().anyMatch( t -> t.getBuildingType().equals( BuildingEnum.HOTEL ) );
+	}
+
+	private void increaseRent()
+	{
+		if ( null == getBuildings() )
+		{
+			throw new IllegalStateException();
+		}
+		setRent( this.rentIncreases[getBuildings().size() - 1] );
+	}
+
+	public void removeBuilding( final Integer buildId )
+	{
+		final Optional<Building> building = this.buildings
+			.stream()
+			.filter( b -> b.getId().equals( buildId ) )
+			.findFirst();
+
+		if ( building.isPresent() )
+		{
+			this.buildings.remove( building.get() );
+		}
+		else
+		{
+			throw new NullPointerException( "Ineteger expected, recieved null" );
+		}
 	}
 
 	/**
 	 * <p>
 	 * </p>
 	 *
-	 * @return Returns the value.
-	 * @see #value
+	 * @param rent
+	 *            The rent to set.
+	 * @see #rent
 	 */
-	public Long getValue()
+	private void setRent( final Long rent )
 	{
-		return this.value;
-	}
-
-	/**
-	 * <p>
-	 * </p>
-	 * 
-	 * @param boardPosition
-	 *            The boardPosition to set.
-	 * @see #boardPosition
-	 */
-	public void setBoardPosition( final Integer boardPosition )
-	{
-		this.boardPosition = boardPosition;
+		this.rent = rent;
 	}
 
 	/**
 	 * <p>
 	 * </p>
 	 *
-	 * @param positionX
-	 *            The positionX to set.
-	 * @see #positionX
+	 * @param rentIncreases2
+	 *            The rentIncreases to set.
+	 * @see #rentIncreases
 	 */
-	public void setPositionX( final Double positionX )
+	private void setRentIncreases( final Long[] rentIncreases2 )
 	{
-		this.positionX = positionX;
+		this.rentIncreases = rentIncreases2;
 	}
 
 	/**
 	 * <p>
 	 * </p>
 	 *
-	 * @param positionY
-	 *            The positionY to set.
-	 * @see #positionY
+	 * @param player
+	 * @see model.AbstractTile#tileRule(model.Player)
 	 */
-	public void setPositionY( final Double positionY )
+	@Override
+	public void tileRule( final Player player )
 	{
-		this.positionY = positionY;
+		if ( !player.equals( getOwner() ) )
+		{
+			player.loseMoney( getRent() );
+		}
 	}
 
-	/**
-	 * <p>
-	 * </p>
-	 *
-	 * @param specialProperty
-	 *            The specialProperty to set.
-	 * @see #specialProperty
-	 */
-	public void setSpecialProperty( final PropertyEnum specialProperty )
-	{
-		this.specialProperty = specialProperty;
-	}
+	private List<Building> buildings;
 
-	/**
-	 * <p>
-	 * </p>
-	 *
-	 * @param value
-	 *            The value to set.
-	 * @see #value
-	 */
-	public void setValue( final Long value )
-	{
-		this.value = value;
-	}
+	private Long rent;
 
-	private Integer boardPosition;
-
-	private Double positionX;
-
-	private Double positionY;
-
-	private PropertyEnum specialProperty;
-
-	private Long value;
+	private Long[] rentIncreases;
 
 }
