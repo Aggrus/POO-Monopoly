@@ -7,19 +7,27 @@ package model;
  * @author gugaz
  * @version 1.0 Created on May 8, 2022
  */
-class Card
+abstract class AbstractCard
 {
+
+	public abstract void cardRule( Player player );
+
+	protected void changeMoney( final Long amount, final Player player )
+	{
+		final Long newMoney = player.getMoney() + amount;
+		player.setMoney( newMoney );
+	}
 
 	/**
 	 * <p>
 	 * </p>
 	 *
 	 * @return Returns the description.
-	 * @see #description
+	 * @see #link
 	 */
 	public String getDescription()
 	{
-		return this.description;
+		return this.link;
 	}
 
 	public Long getGainOrLoss()
@@ -43,7 +51,7 @@ class Card
 	/**
 	 * <p>
 	 * </p>
-	 * 
+	 *
 	 * @return Returns the money.
 	 * @see #money
 	 */
@@ -70,11 +78,11 @@ class Card
 	 *
 	 * @param description
 	 *            The description to set.
-	 * @see #description
+	 * @see #link
 	 */
 	public void setDescription( final String description )
 	{
-		this.description = description;
+		this.link = description;
 	}
 
 	/**
@@ -106,7 +114,7 @@ class Card
 	/**
 	 * <p>
 	 * </p>
-	 * 
+	 *
 	 * @param money
 	 *            The money to set.
 	 * @see #money
@@ -116,11 +124,11 @@ class Card
 		this.money = money;
 	}
 
-	private String description;
-
 	private Integer id;
 
 	private boolean isLuck;
+
+	private String link;
 
 	private Long money;
 

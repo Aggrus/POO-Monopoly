@@ -1,6 +1,7 @@
 package model;
 
-import enums.BuildingEnum;
+import enums.TileColorEnum;
+import enums.TileEnum;
 
 /**
  * <p>
@@ -9,7 +10,8 @@ import enums.BuildingEnum;
  * @author gugaz
  * @version 1.0 Created on May 8, 2022
  */
-class Building
+
+abstract class AbstractTile
 {
 
 	/**
@@ -28,24 +30,24 @@ class Building
 	 * <p>
 	 * </p>
 	 *
-	 * @return Returns the buildingType.
-	 * @see #buildingType
+	 * @return Returns the canPurchase.
+	 * @see #canPurchase
 	 */
-	public BuildingEnum getBuildingType()
+	public boolean getCanPurchase()
 	{
-		return this.buildingType;
+		return this.canPurchase;
 	}
 
 	/**
 	 * <p>
 	 * </p>
-	 * 
-	 * @return Returns the id.
-	 * @see #id
+	 *
+	 * @return Returns the gorup.
+	 * @see #gorup
 	 */
-	public Integer getId()
+	public TileColorEnum getGorup()
 	{
-		return this.id;
+		return this.gorup;
 	}
 
 	/**
@@ -88,24 +90,24 @@ class Building
 	 * <p>
 	 * </p>
 	 *
-	 * @return Returns the price.
-	 * @see #price
+	 * @return Returns the specialProperty.
+	 * @see #specialProperty
 	 */
-	public Long getPrice()
+	public TileEnum getSpecialProperty()
 	{
-		return this.price;
+		return this.specialProperty;
 	}
 
 	/**
 	 * <p>
 	 * </p>
 	 *
-	 * @return Returns the property.
-	 * @see #property
+	 * @return Returns the value.
+	 * @see #value
 	 */
-	public AbstractTile getProperty()
+	public Long getValue()
 	{
-		return this.property;
+		return this.value;
 	}
 
 	/**
@@ -125,26 +127,26 @@ class Building
 	 * <p>
 	 * </p>
 	 *
-	 * @param buildingType
-	 *            The buildingType to set.
-	 * @see #buildingType
+	 * @param canPurchase
+	 *            The canPurchase to set.
+	 * @see #canPurchase
 	 */
-	public void setBuildingType( final BuildingEnum buildingType )
+	protected void setCanPurchase( final boolean canPurchase )
 	{
-		this.buildingType = buildingType;
+		this.canPurchase = canPurchase;
 	}
 
 	/**
 	 * <p>
 	 * </p>
-	 * 
-	 * @param id
-	 *            The id to set.
-	 * @see #id
+	 *
+	 * @param gorup
+	 *            The gorup to set.
+	 * @see #gorup
 	 */
-	public void setId( final Integer id )
+	protected void setGorup( final TileColorEnum gorup )
 	{
-		this.id = id;
+		this.gorup = gorup;
 	}
 
 	/**
@@ -155,7 +157,7 @@ class Building
 	 *            The owner to set.
 	 * @see #owner
 	 */
-	public void setOwner( final Player owner )
+	protected void setOwner( final Player owner )
 	{
 		this.owner = owner;
 	}
@@ -190,33 +192,35 @@ class Building
 	 * <p>
 	 * </p>
 	 *
-	 * @param price
-	 *            The price to set.
-	 * @see #price
+	 * @param specialProperty
+	 *            The specialProperty to set.
+	 * @see #specialProperty
 	 */
-	public void setPrice( final Long price )
+	protected void setSpecialProperty( final TileEnum specialProperty )
 	{
-		this.price = price;
+		this.specialProperty = specialProperty;
 	}
 
 	/**
 	 * <p>
 	 * </p>
 	 *
-	 * @param property
-	 *            The property to set.
-	 * @see #property
+	 * @param value
+	 *            The value to set.
+	 * @see #value
 	 */
-	public void setProperty( final AbstractTile property )
+	protected void setValue( final Long value )
 	{
-		this.property = property;
+		this.value = value;
 	}
+
+	public abstract void tileRule( Player player );
 
 	private Integer boardPosition;
 
-	private BuildingEnum buildingType;
+	private boolean canPurchase;
 
-	private Integer id;
+	private TileColorEnum gorup;
 
 	private Player owner;
 
@@ -224,8 +228,8 @@ class Building
 
 	private Double positionY;
 
-	private Long price;
+	private TileEnum specialProperty;
 
-	private AbstractTile property;
+	private Long value;
 
 }

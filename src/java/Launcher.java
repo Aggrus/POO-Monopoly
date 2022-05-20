@@ -1,3 +1,5 @@
+import model.Game;
+
 /**
  * <p>
  * </p>
@@ -10,7 +12,7 @@ public class Launcher
 
 	public static void main( final String[] args )
 	{
-
+		Game.setNumPlayers( 0 );
 	}
 
 }

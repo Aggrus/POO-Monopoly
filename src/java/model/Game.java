@@ -12,16 +12,28 @@ import java.util.List;
 public class Game
 {
 
+	private static List<AbstractCard> cards;
+
+	private static Integer numPlayers;
+
+	private static List<Player> playerList;
+
+	private static List<Property> properties;
+
+	private Game()
+	{
+	}
+
 	/**
 	 * <p>
 	 * </p>
-	 *
-	 * @return Returns the board.
-	 * @see #board
+	 * 
+	 * @return Returns the cards.
+	 * @see #cards
 	 */
-	public Board getBoard()
+	public static List<AbstractCard> getCards()
 	{
-		return this.board;
+		return cards;
 	}
 
 	/**
@@ -31,9 +43,9 @@ public class Game
 	 * @return Returns the numPlayers.
 	 * @see #numPlayers
 	 */
-	public Integer getNumPlayers()
+	public static Integer getNumPlayers()
 	{
-		return this.numPlayers;
+		return Game.numPlayers;
 	}
 
 	/**
@@ -43,22 +55,34 @@ public class Game
 	 * @return Returns the playerList.
 	 * @see #playerList
 	 */
-	public List<Player> getPlayerList()
+	public static List<Player> getPlayerList()
 	{
-		return this.playerList;
+		return Game.playerList;
 	}
 
 	/**
 	 * <p>
 	 * </p>
 	 *
-	 * @param board
-	 *            The board to set.
-	 * @see #board
+	 * @return Returns the board.
+	 * @see #properties
 	 */
-	public void setBoard( final Board board )
+	public static List<Property> getProperties()
 	{
-		this.board = board;
+		return properties;
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 * 
+	 * @param cards
+	 *            The cards to set.
+	 * @see #cards
+	 */
+	public static void setCards( final List<AbstractCard> cards )
+	{
+		Game.cards = cards;
 	}
 
 	/**
@@ -69,9 +93,9 @@ public class Game
 	 *            The numPlayers to set.
 	 * @see #numPlayers
 	 */
-	public void setNumPlayers( final Integer numPlayers )
+	public static void setNumPlayers( final Integer numPlayers )
 	{
-		this.numPlayers = numPlayers;
+		Game.numPlayers = numPlayers;
 	}
 
 	/**
@@ -82,15 +106,22 @@ public class Game
 	 *            The playerList to set.
 	 * @see #playerList
 	 */
-	public void setPlayerList( final List<Player> playerList )
+	public static void setPlayerList( final List<Player> playerList )
 	{
-		this.playerList = playerList;
+		Game.playerList = playerList;
 	}
 
-	private Board board;
-
-	private Integer numPlayers;
-
-	private List<Player> playerList;
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @param board
+	 *            The board to set.
+	 * @see #properties
+	 */
+	public static void setProperties( final List<Property> board )
+	{
+		Game.properties = board;
+	}
 
 }
