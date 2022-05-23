@@ -1,5 +1,4 @@
 import model.Game;
-import View.MainFrame;
 
 /**
  * <p>
@@ -14,7 +13,6 @@ public class Launcher
 	public static void main( final String[] args )
 	{
 		Game.setNumPlayers( 0 );
-		MainFrame.getMainFrame();
 	}
 
 }
