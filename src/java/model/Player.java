@@ -24,11 +24,6 @@ class Player
 		this.positionY = positionY;
 	}
 
-	public void addPriosionTime()
-	{
-		this.prisionTime++;
-	}
-
 	/**
 	 * <p>
 	 * </p>
@@ -93,18 +88,6 @@ class Player
 	 * <p>
 	 * </p>
 	 *
-	 * @return Returns the prisionTime.
-	 * @see #prisionTime
-	 */
-	public Integer getPrisionTime()
-	{
-		return this.prisionTime;
-	}
-
-	/**
-	 * <p>
-	 * </p>
-	 *
 	 * @return Returns the roundTrips.
 	 * @see #roundTrips
 	 */
@@ -144,7 +127,7 @@ class Player
 	 * @return Returns the inPriosion.
 	 * @see #inPrision
 	 */
-	public boolean isInPrision()
+	public boolean isInPriosion()
 	{
 		return this.inPrision;
 	}
@@ -165,11 +148,6 @@ class Player
 		{
 			setInGame( false );
 		}
-	}
-
-	public void resetPrisionTime()
-	{
-		this.prisionTime = 0;
 	}
 
 	/**
@@ -232,7 +210,7 @@ class Player
 	 *            The inPriosion to set.
 	 * @see #inPrision
 	 */
-	public void setInPrision( final boolean inPriosion )
+	public void setInPriosion( final boolean inPriosion )
 	{
 		this.inPrision = inPriosion;
 	}
@@ -304,8 +282,6 @@ class Player
 	private Double positionX;
 
 	private Double positionY;
-
-	private Integer prisionTime;
 
 	private Integer roundTrips;
 

@@ -30,7 +30,7 @@ class Dice
 	public static ArrayList<Integer> moveRoll()
 	{
 		final ArrayList<Integer> roll = simpleRoll();
-		while ( roll.get( roll.size() - 1 ).equals( roll.get( roll.size() - 2 ) ) && ( roll.size() < 7 ) )
+		while ( roll.get( roll.size() - 1 ).equals( roll.get( roll.size() - 2 ) ) )
 		{
 			roll.addAll( simpleRoll() );
 		}

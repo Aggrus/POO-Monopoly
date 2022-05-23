@@ -32,7 +32,14 @@ class GoToPrision
 	@Override
 	public void tileRule( final Player player )
 	{
-		player.setInPrision( true );
+		if ( player.isFreeRide() )
+		{
+			player.setFreeRide( false );
+		}
+		else
+		{
+			player.setInPriosion( true );
+		}
 	}
 
 }
