@@ -22,7 +22,7 @@ class PrisionCard
 	public
 	void cardRule( final Player player )
 	{
-		player.setInPriosion( true );
+		player.setInPrision( true );
 	}
 
 }
