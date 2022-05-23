@@ -1,0 +1,92 @@
+package View;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.geom.*;
+import java.io.*;
+import javax.imageio.*;
+
+class MenuScreen extends JPanel {
+    private static int window_width;
+    private static int window_height;
+
+    private static MenuScreen menu_screen = null;
+    
+    public MenuScreen (int w, int h) {
+        MenuScreen.window_width = w;
+        MenuScreen.window_height = h;
+    }
+    
+    public static MenuScreen getMenuScreen(int w, int h) {
+        if (menu_screen == null) {
+            menu_screen = new MenuScreen(w, h);
+        }
+        return menu_screen;
+    }
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+        Font header_font, gamemode_font;
+
+        draw_images(g2d);
+
+        header_font = new Font("SansSerif", Font.BOLD, 25);
+        draw_alligned_header(g2d, "Novo Jogo:", header_font, Color.WHITE, 140);
+
+        Rectangle2D rect2 = new Rectangle2D.Double(712, 170, 220, 50);
+        g2d.setPaint(Color.WHITE);
+        g2d.fill(rect2);
+        Rectangle2D rect3 = new Rectangle2D.Double(712, 250, 220, 50);
+        g2d.setPaint(Color.WHITE);
+        g2d.fill(rect3);
+        Rectangle2D rect4 = new Rectangle2D.Double(712, 330, 220, 50);
+        g2d.setPaint(Color.WHITE);
+        g2d.fill(rect4);
+        Rectangle2D rect5 = new Rectangle2D.Double(712, 410, 220, 50);
+        g2d.setPaint(Color.WHITE);
+        g2d.fill(rect5);
+        Rectangle2D rect6 = new Rectangle2D.Double(712, 490, 220, 50);
+        g2d.setPaint(Color.WHITE);
+        g2d.fill(rect6);
+
+        gamemode_font = new Font("SansSerif", Font.BOLD, 18);
+        draw_str_in_rect(g2d, "2 Jogadores", gamemode_font, Color.BLACK, rect2);    
+        draw_str_in_rect(g2d, "3 Jogadores", gamemode_font, Color.BLACK, rect3);    
+        draw_str_in_rect(g2d, "4 Jogadores", gamemode_font, Color.BLACK, rect4);    
+        draw_str_in_rect(g2d, "5 Jogadores", gamemode_font, Color.BLACK, rect5);    
+        draw_str_in_rect(g2d, "6 Jogadores", gamemode_font, Color.BLACK, rect6);    
+
+    }
+
+    private void draw_images(Graphics g) {
+        Image img_background, img_box;
+        try {
+            img_background = ImageIO.read(new File("data/background.png"));
+            img_box = ImageIO.read(new File("data/box.png"));
+            g.drawImage(img_background, 0, 0, null);
+            g.drawImage(img_box, 37, (window_height - img_box.getHeight(null))/2, null);
+        }
+        catch (IOException e) {
+            System.out.println(e.getMessage());
+            System.exit(1);
+        }
+
+    }
+
+    private void draw_alligned_header (Graphics g, String str, Font font, Color cor, int height) {
+        FontMetrics metrics = g.getFontMetrics(font);
+        g.setFont(font);
+        g.setColor(cor);
+        g.drawString(str, 37 + 3*(window_width - metrics.stringWidth(str))/4, height); 
+    }
+
+    private void draw_str_in_rect (Graphics g, String str, Font font, Color cor, Rectangle2D rect) {
+        FontMetrics metrics = g.getFontMetrics(font);
+        int x, y;
+        x = (int)rect.getX() + ((int)rect.getWidth() - metrics.stringWidth(str))/2;
+        y = (int)rect.getY() + (((int)rect.getHeight() - metrics.getHeight())/2) + metrics.getAscent();
+        g.setFont(font);
+        g.setColor(cor);
+        g.drawString(str, x, y); 
+    }    
+}
