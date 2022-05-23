@@ -33,7 +33,7 @@ public class ApplyRules
 	public boolean checkPlayerFreed( final List<Integer> roll, final Player player )
 	{
 
-		player.setInPrision( roll.size() > 2 );
+		player.setInPrision(!( roll.size() > 2 ));
 
 		if ( player.isInPrision() && player.getPrisionTime().equals( 4 ) )
 		{
