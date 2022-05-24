@@ -2,18 +2,21 @@ package View;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
+import java.awt.event.*;
 import java.io.*;
 import javax.imageio.*;
 
-class MenuScreen extends JPanel {
+class MenuScreen extends JPanel implements MouseListener {
     private static int window_width;
     private static int window_height;
 
     private static MenuScreen menu_screen = null;
+
     
-    public MenuScreen (int w, int h) {
+    private MenuScreen (int w, int h) {
         MenuScreen.window_width = w;
         MenuScreen.window_height = h;
+        addMouseListener(this);
     }
     
     public static MenuScreen getMenuScreen(int w, int h) {
@@ -88,5 +91,34 @@ class MenuScreen extends JPanel {
         g.setFont(font);
         g.setColor(cor);
         g.drawString(str, x, y); 
-    }    
+    }
+
+    public void mousePressed(MouseEvent e) {
+        int x = e.getX(), y = e.getY();
+
+        System.out.printf("x = %d\ny = %d\n", x, y);
+
+        if (x >= 712 && x <= 712 + 220) {
+            if (y >= 170 && y <= 170 + 50){
+                MainFrame.getMainFrame().set_num_players(2);
+            }
+            else if (y >= 250 && y <= 250 + 50){
+                MainFrame.getMainFrame().set_num_players(3);
+            }
+            else if (y >= 330 && y <= 330 + 50){
+                MainFrame.getMainFrame().set_num_players(4);
+            }
+            else if (y >= 410 && y <= 410 + 50){
+                MainFrame.getMainFrame().set_num_players(5);
+            }
+            else if (y >= 490 && y <= 490 + 50){
+                MainFrame.getMainFrame().set_num_players(6);
+            }
+        }   
+    }
+
+    public void mouseEntered(MouseEvent e) {}
+	public void mouseClicked(MouseEvent e) {}
+	public void mouseReleased(MouseEvent e) {}
+	public void mouseExited(MouseEvent e) {}    
 }

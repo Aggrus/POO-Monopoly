@@ -2,18 +2,20 @@ package View;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
+import java.awt.event.*;
 import java.io.*;
 import javax.imageio.*;
 
-class GameScreen extends JPanel {
+class GameScreen extends JPanel implements MouseListener {
     private static int window_width;
     private static int window_height;
 
     private static GameScreen game_screen = null;
 
-    public GameScreen (int w, int h) {
+    private GameScreen (int w, int h) {
         GameScreen.window_width = w;
         GameScreen.window_height = h;
+        addMouseListener(this);
     }
 
     public static GameScreen getGameScreen(int w, int h) {
@@ -47,5 +49,17 @@ class GameScreen extends JPanel {
         }
 
     }
+    
+    public void mousePressed(MouseEvent e) {
+        int x = e.getX(), y = e.getY();
+
+        System.out.printf("x = %d\ny = %d\n", x, y);
+
+    }
+
+    public void mouseEntered(MouseEvent e) {}
+	public void mouseClicked(MouseEvent e) {}
+	public void mouseReleased(MouseEvent e) {}
+	public void mouseExited(MouseEvent e) {}
 
 }

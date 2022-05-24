@@ -5,10 +5,11 @@ import java.awt.*;
 public class MainFrame extends JFrame {
     public final int DFLT_WIDTH = 1100;
     public final int DFLT_HEIGHT = 700;
+    private static int num_players = 0;
 
     private static MainFrame main_frame = null;
 
-    public MainFrame() {
+    private MainFrame() {
         Toolkit tk = Toolkit.getDefaultToolkit();
         Dimension screenSize = tk.getScreenSize();
         int screen_width = screenSize.width;
@@ -29,13 +30,21 @@ public class MainFrame extends JFrame {
         return main_frame;
     }
 
+    public void set_num_players (int n) {
+        num_players = n;
+        System.out.printf("num_players = %d\n", num_players);
+        ScreenManager();
+    }
+
     public void ScreenManager () {
-        int game_mode = 2;
-        if (game_mode == 0) {
+        if (num_players == 0) {
             getContentPane().add(MenuScreen.getMenuScreen(DFLT_WIDTH, DFLT_HEIGHT));
         }
         else {
+            getContentPane().removeAll();
             getContentPane().add(GameScreen.getGameScreen(DFLT_WIDTH, DFLT_HEIGHT));
+            getContentPane().revalidate();
+            getContentPane().repaint();
         } 
     }
 }
