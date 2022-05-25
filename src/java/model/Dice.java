@@ -39,7 +39,7 @@ class Dice
 
 	public static ArrayList<Integer> simpleRoll()
 	{
-		final ArrayList<Integer> dice = new ArrayList();
+		final ArrayList<Integer> dice = new ArrayList<Integer>();
 
 		final Integer rollOne = diceOne.nextInt( 6 );
 		final Integer rollTwo = diceTwo.nextInt( 6 );

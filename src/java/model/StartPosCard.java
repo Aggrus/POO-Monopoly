@@ -10,6 +10,13 @@ package model;
 class StartPosCard
 	extends AbstractCard
 {
+	StartPosCard(Integer id, String link, Long money)
+	{
+		setId(id);
+		setLuck(true);
+		setLink(link);
+		setMoney(money);
+	}
 
 	/**
 	 * <p>

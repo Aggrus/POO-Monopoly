@@ -11,6 +11,16 @@ class PrisionCard
 	extends AbstractCard
 {
 
+	PrisionCard(Integer id, boolean luck, String link) 
+	{
+
+		this.setId(id);
+		this.setLuck(luck);
+		this.setLink(link);
+		this.setMoney(Long.valueOf(0));
+
+	}
+
 	/**
 	 * <p>
 	 * </p>

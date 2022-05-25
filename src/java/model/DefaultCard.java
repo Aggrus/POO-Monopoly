@@ -11,6 +11,13 @@ class DefaultCard
 	extends AbstractCard
 {
 
+	DefaultCard(Integer id, boolean luck, String link, Long money) {
+		this.setId(id);
+		this.setLuck(luck);
+		this.setLink(link);
+		this.setMoney(money);
+	}
+
 	/**
 	 * <p>
 	 * </p>

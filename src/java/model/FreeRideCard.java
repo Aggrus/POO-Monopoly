@@ -11,6 +11,12 @@ class FreeRideCard
 	extends AbstractCard
 {
 
+	FreeRideCard(Integer id, String link)
+	{
+		setId(id);
+		setLink(link);
+		setLuck(true);
+	}
 	/**
 	 * <p>
 	 * </p>

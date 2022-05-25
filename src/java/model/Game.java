@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,10 +25,16 @@ public class Game
 	{
 	}
 
+	public static List<AbstractCard> createEmptyDeck()
+	{
+		Game.cards = new ArrayList();
+		return cards;
+	}
+
 	/**
 	 * <p>
 	 * </p>
-	 * 
+	 *
 	 * @return Returns the cards.
 	 * @see #cards
 	 */
@@ -75,7 +82,7 @@ public class Game
 	/**
 	 * <p>
 	 * </p>
-	 * 
+	 *
 	 * @param cards
 	 *            The cards to set.
 	 * @see #cards

@@ -1,5 +1,6 @@
-import model.Game;
 import View.MainFrame;
+import model.ApplyRules;
+import model.Game;
 
 /**
  * <p>
@@ -14,6 +15,8 @@ public class Launcher
 	public static void main( final String[] args )
 	{
 		Game.setNumPlayers( 0 );
+		Game.createEmptyDeck();
+		ApplyRules.shuffleDeck();
 		MainFrame.getMainFrame();
 	}
 
