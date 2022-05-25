@@ -29,6 +29,16 @@ class DrawCardTile
 		setValue( Long.valueOf( 0 ) );
 	}
 
+	public AbstractCard getDrawnCard()
+	{
+		return this.drawnCard;
+	}
+
+	protected void setDrawnCard( final AbstractCard drawnCard )
+	{
+		this.drawnCard = drawnCard;
+	}
+
 	/**
 	 * <p>
 	 * </p>
@@ -43,11 +53,14 @@ class DrawCardTile
 		final Random card = new Random();
 		final AbstractCard curCard = deck.get( card.nextInt( Game.getCards().size() - 1 ) );
 		curCard.cardRule( player );
+		setDrawnCard( curCard );
 		deck.remove( curCard );
 		if ( deck.isEmpty() )
 		{
 			ApplyRules.shuffleDeck();
 		}
 	}
+
+	private AbstractCard drawnCard;
 
 }

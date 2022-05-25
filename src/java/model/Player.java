@@ -15,6 +15,11 @@ class Player
 	public Player()
 	{
 		this.money = Long.valueOf( 4000 );
+		this.inGame = true;
+		this.boardPosition = 0;
+		this.inPrision = false;
+		this.prisionTime = 0;
+		this.roundTrips = 0;
 	}
 
 	public Player( final Double positionX, final Double positionY )
@@ -22,6 +27,11 @@ class Player
 		this.money = Long.valueOf( 4000 );
 		this.positionX = positionX;
 		this.positionY = positionY;
+		this.inGame = true;
+		this.boardPosition = 0;
+		this.inPrision = false;
+		this.prisionTime = 0;
+		this.roundTrips = 0;
 	}
 
 	public void addPriosionTime()

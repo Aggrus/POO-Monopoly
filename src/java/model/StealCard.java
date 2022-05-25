@@ -11,6 +11,13 @@ public class StealCard
 	extends AbstractCard
 {
 
+	StealCard(Integer id, String link, Long money)
+	{
+		setId(id);
+		setLuck(true);
+		setLink(link);
+		setMoney(money);
+	}
 	/**
 	 * <p>
 	 * </p>

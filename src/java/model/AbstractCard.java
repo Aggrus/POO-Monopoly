@@ -67,22 +67,9 @@ abstract class AbstractCard
 	 * @return Returns the isLuck.
 	 * @see #isLuck
 	 */
-	public boolean isLuck()
+	protected boolean isLuck()
 	{
 		return this.isLuck;
-	}
-
-	/**
-	 * <p>
-	 * </p>
-	 *
-	 * @param description
-	 *            The description to set.
-	 * @see #link
-	 */
-	public void setDescription( final String description )
-	{
-		this.link = description;
 	}
 
 	/**
@@ -93,9 +80,22 @@ abstract class AbstractCard
 	 *            The id to set.
 	 * @see #id
 	 */
-	public void setId( final Integer id )
+	protected void setId( final Integer id )
 	{
 		this.id = id;
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @param link
+	 *            The link to set.
+	 * @see #link
+	 */
+	protected void setLink( final String link )
+	{
+		this.link = link;
 	}
 
 	/**
@@ -106,7 +106,7 @@ abstract class AbstractCard
 	 *            The isLuck to set.
 	 * @see #isLuck
 	 */
-	public void setLuck( final boolean isLuck )
+	protected void setLuck( final boolean isLuck )
 	{
 		this.isLuck = isLuck;
 	}
@@ -119,7 +119,7 @@ abstract class AbstractCard
 	 *            The money to set.
 	 * @see #money
 	 */
-	public void setMoney( final Long money )
+	protected void setMoney( final Long money )
 	{
 		this.money = money;
 	}
