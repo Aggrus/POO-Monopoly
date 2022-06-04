@@ -18,7 +18,7 @@ class GameScreen extends JPanel implements MouseListener {
         addMouseListener(this);
     }
 
-    public static GameScreen getGameScreen(int w, int h) {
+    public static GameScreen getInstance(int w, int h) {
         if (game_screen == null) {
             game_screen = new GameScreen(w, h);
         }

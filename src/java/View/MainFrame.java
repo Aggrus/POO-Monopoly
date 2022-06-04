@@ -2,7 +2,11 @@ package View;
 import javax.swing.*;
 import java.awt.*;
 
-public class MainFrame extends JFrame {
+import Controller.MenuController;
+import Controller.Observer.Observable;
+import Controller.Observer.Observer;
+
+public class MainFrame extends JFrame implements Observer{
     public final int DFLT_WIDTH = 1100;
     public final int DFLT_HEIGHT = 700;
     private static int num_players = 0;
@@ -21,7 +25,7 @@ public class MainFrame extends JFrame {
         this.ScreenManager();
     }
 
-    public static MainFrame getMainFrame() {
+    public static MainFrame getInstance() {
         if (main_frame == null) {
             main_frame = new MainFrame();
             main_frame.setTitle("Jogo Monopoly");
@@ -31,20 +35,24 @@ public class MainFrame extends JFrame {
     }
 
     public void set_num_players (int n) {
-        num_players = n;
-        System.out.printf("num_players = %d\n", num_players);
-        ScreenManager();
+
     }
 
     public void ScreenManager () {
         if (num_players == 0) {
-            getContentPane().add(MenuScreen.getMenuScreen(DFLT_WIDTH, DFLT_HEIGHT));
+            getContentPane().add(MenuScreen.getInstance(DFLT_WIDTH, DFLT_HEIGHT));
         }
         else {
             getContentPane().removeAll();
-            getContentPane().add(GameScreen.getGameScreen(DFLT_WIDTH, DFLT_HEIGHT));
+            getContentPane().add(GameScreen.getInstance(DFLT_WIDTH, DFLT_HEIGHT));
             getContentPane().revalidate();
             getContentPane().repaint();
         } 
+    }
+
+    public void notify(int msg) {
+        num_players = msg;
+        System.out.printf("num_players = %d\n", num_players);
+        ScreenManager();
     }
 }
