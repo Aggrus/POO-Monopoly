@@ -44,7 +44,7 @@ class GameScreen extends JPanel implements MouseListener {
             g.drawImage(img_board, 17, (window_height - 90*img_board.getHeight(null)/100)/4, 90*img_board.getWidth(null)/100, 90*img_board.getWidth(null)/100, null);
         }
         catch (IOException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
             System.exit(1);
         }
 

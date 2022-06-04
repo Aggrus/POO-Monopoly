@@ -15,19 +15,27 @@ public class Game
 
 	private static List<AbstractCard> cards;
 
+	private static Game game;
+
+	private static boolean isOn;
+
 	private static Integer numPlayers;
 
 	private static List<Player> playerList;
 
-	private static List<Property> properties;
+	private static List<AbstractTile> tiles;
 
 	private Game()
 	{
+		Game.createEmptyDeck();
+		Game.setOn( true );
+		Game.setPlayerList( new ArrayList<Player>() );
+		Game.setTiles( new ArrayList<AbstractTile>() );
 	}
 
 	public static List<AbstractCard> createEmptyDeck()
 	{
-		Game.cards = new ArrayList();
+		Game.cards = new ArrayList<AbstractCard>();
 		return cards;
 	}
 
@@ -41,6 +49,22 @@ public class Game
 	public static List<AbstractCard> getCards()
 	{
 		return cards;
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @return Returns the game.
+	 * @see #game
+	 */
+	public static Game getGame()
+	{
+		if ( game == null )
+		{
+			game = new Game();
+		}
+		return game;
 	}
 
 	/**
@@ -72,11 +96,23 @@ public class Game
 	 * </p>
 	 *
 	 * @return Returns the board.
-	 * @see #properties
+	 * @see #tiles
 	 */
-	public static List<Property> getProperties()
+	public static List<AbstractTile> getTiles()
 	{
-		return properties;
+		return tiles;
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @return Returns the isOn.
+	 * @see #isOn
+	 */
+	public static boolean isOn()
+	{
+		return isOn;
 	}
 
 	/**
@@ -109,6 +145,19 @@ public class Game
 	 * <p>
 	 * </p>
 	 *
+	 * @param isOn
+	 *            The isOn to set.
+	 * @see #isOn
+	 */
+	public static void setOn( final boolean isOn )
+	{
+		Game.isOn = isOn;
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
 	 * @param playerList
 	 *            The playerList to set.
 	 * @see #playerList
@@ -124,11 +173,11 @@ public class Game
 	 *
 	 * @param board
 	 *            The board to set.
-	 * @see #properties
+	 * @see #tiles
 	 */
-	public static void setProperties( final List<Property> board )
+	public static void setTiles( final List<AbstractTile> board )
 	{
-		Game.properties = board;
+		Game.tiles = board;
 	}
 
 }
