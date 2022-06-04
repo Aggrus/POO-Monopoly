@@ -38,8 +38,8 @@ class GameScreen extends JPanel implements MouseListener {
     private void draw_images(Graphics g) {
         Image img_background, img_board;
         try {
-            img_background = ImageIO.read(new File("data/background.png"));
-            img_board = ImageIO.read(new File("data/tabuleiro.png"));
+            img_background = ImageIO.read(new File("src/java/data/background.png"));
+            img_board = ImageIO.read(new File("src/java/data/tabuleiro.png"));
             g.drawImage(img_background, 0, 0, null);
             g.drawImage(img_board, 17, (window_height - 90*img_board.getHeight(null)/100)/4, 90*img_board.getWidth(null)/100, 90*img_board.getWidth(null)/100, null);
         }
