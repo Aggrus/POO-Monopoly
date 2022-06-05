@@ -17,30 +17,29 @@ public class Game implements Observable
 {
 
 	private static List<AbstractCard> cards;
-	private static Game game;
 
-	private static boolean isOn;
-
-	private static Integer numPlayers;
-
+	private static int numPlayers;
 
 	private static List<Player> playerList;
 
-	private static List<AbstractTile> tiles;
+	private static List<Property> properties;
 
 	private List<Observer> observadores = new ArrayList<Observer>();
 
-	private Game()
-	{
-		createEmptyDeck();
-		setOn( true );
-		setPlayerList( new ArrayList<Player>() );
-		setTiles( new ArrayList<AbstractTile>() );
+	private static Game game = null;
+
+	private Game() {}
+
+	public static Game getInstance() {
+		if (game == null) {
+			game = new Game();
+		}
+		return game;
 	}
 
 	public static List<AbstractCard> createEmptyDeck()
 	{
-		cards = new ArrayList<AbstractCard>();
+		cards = new ArrayList();
 		return cards;
 	}
 
@@ -54,22 +53,6 @@ public class Game implements Observable
 	public static List<AbstractCard> getCards()
 	{
 		return cards;
-	}
-
-	/**
-	 * <p>
-	 * </p>
-	 *
-	 * @return Returns the game.
-	 * @see #game
-	 */
-	public static Game getInstance()
-	{
-		if ( game == null )
-		{
-			game = new Game();
-		}
-		return game;
 	}
 
 	/**
@@ -100,23 +83,11 @@ public class Game implements Observable
 	 * </p>
 	 *
 	 * @return Returns the board.
-	 * @see #tiles
+	 * @see #properties
 	 */
-	public static List<AbstractTile> getTiles()
+	public static List<Property> getProperties()
 	{
-		return tiles;
-	}
-
-	/**
-	 * <p>
-	 * </p>
-	 *
-	 * @return Returns the isOn.
-	 * @see #isOn
-	 */
-	public static boolean isOn()
-	{
-		return isOn;
+		return properties;
 	}
 
 	/**
@@ -148,19 +119,6 @@ public class Game implements Observable
 	 * <p>
 	 * </p>
 	 *
-	 * @param isOn
-	 *            The isOn to set.
-	 * @see #isOn
-	 */
-	public static void setOn( final boolean isOn )
-	{
-		Game.isOn = isOn;
-	}
-
-	/**
-	 * <p>
-	 * </p>
-	 *
 	 * @param playerList
 	 *            The playerList to set.
 	 * @see #playerList
@@ -176,11 +134,11 @@ public class Game implements Observable
 	 *
 	 * @param board
 	 *            The board to set.
-	 * @see #tiles
+	 * @see #properties
 	 */
-	public static void setTiles( final List<AbstractTile> board )
+	public static void setProperties( final List<Property> board )
 	{
-		Game.tiles = board;
+		properties = board;
 	}
 
 

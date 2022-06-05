@@ -14,7 +14,8 @@ public class Launcher
 
 	public static void main( final String[] args )
 	{
-		Game.setOn( true );
+		Game.getInstance();
+		Game.setNumPlayers(0);
 		Game.createEmptyDeck();
 		ApplyRules.shuffleDeck();
 		MainFrame.getInstance();
