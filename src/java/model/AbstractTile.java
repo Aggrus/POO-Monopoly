@@ -43,11 +43,11 @@ abstract class AbstractTile
 	 * </p>
 	 *
 	 * @return Returns the gorup.
-	 * @see #gorup
+	 * @see #group
 	 */
 	public TileColorEnum getGorup()
 	{
-		return this.gorup;
+		return this.group;
 	}
 
 	/**
@@ -60,30 +60,6 @@ abstract class AbstractTile
 	public Player getOwner()
 	{
 		return this.owner;
-	}
-
-	/**
-	 * <p>
-	 * </p>
-	 *
-	 * @return Returns the positionX.
-	 * @see #positionX
-	 */
-	public Double getPositionX()
-	{
-		return this.positionX;
-	}
-
-	/**
-	 * <p>
-	 * </p>
-	 *
-	 * @return Returns the positionY.
-	 * @see #positionY
-	 */
-	public Double getPositionY()
-	{
-		return this.positionY;
 	}
 
 	/**
@@ -142,11 +118,11 @@ abstract class AbstractTile
 	 *
 	 * @param gorup
 	 *            The gorup to set.
-	 * @see #gorup
+	 * @see #group
 	 */
 	protected void setGorup( final TileColorEnum gorup )
 	{
-		this.gorup = gorup;
+		this.group = gorup;
 	}
 
 	/**
@@ -160,32 +136,6 @@ abstract class AbstractTile
 	protected void setOwner( final Player owner )
 	{
 		this.owner = owner;
-	}
-
-	/**
-	 * <p>
-	 * </p>
-	 *
-	 * @param positionX
-	 *            The positionX to set.
-	 * @see #positionX
-	 */
-	public void setPositionX( final Double positionX )
-	{
-		this.positionX = positionX;
-	}
-
-	/**
-	 * <p>
-	 * </p>
-	 *
-	 * @param positionY
-	 *            The positionY to set.
-	 * @see #positionY
-	 */
-	public void setPositionY( final Double positionY )
-	{
-		this.positionY = positionY;
 	}
 
 	/**
@@ -220,13 +170,9 @@ abstract class AbstractTile
 
 	private boolean canPurchase;
 
-	private TileColorEnum gorup;
+	private TileColorEnum group;
 
 	private Player owner;
-
-	private Double positionX;
-
-	private Double positionY;
 
 	private TileEnum specialProperty;
 
