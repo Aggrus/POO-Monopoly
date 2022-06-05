@@ -1,5 +1,5 @@
 package Controller.Observer;
 
 public interface Observer {
-    public void notify(int msg);
+    public void notify(Object msg);
 }

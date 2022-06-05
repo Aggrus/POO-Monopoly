@@ -81,7 +81,7 @@ class Property
 		}
 		player.loseMoney( getValue() );
 		setOwner( player );
-
+		setCanPurchase( false );
 	}
 
 	private boolean canBuild()

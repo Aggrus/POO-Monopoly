@@ -47,8 +47,8 @@ public class MainFrame extends JFrame implements Observer{
         } 
     }
 
-    public void notify(int msg) {
-        num_players = msg;
+    public void notify(Object msg) {
+        num_players = (int)msg;
         System.out.printf("num_players = %d\n", num_players);
         ScreenManager();
     }
