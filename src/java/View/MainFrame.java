@@ -12,7 +12,7 @@ public class MainFrame
 	implements Observer
 {
 
-	private static MainFrame main_frame = null;
+	private static MainFrame mainFrame = null;
 
 	private static int num_players = 0;
 
@@ -29,15 +29,15 @@ public class MainFrame
 		ScreenManager();
 	}
 
-	public static MainFrame getMainFrame()
+	public static MainFrame getInstance()
 	{
-		if ( main_frame == null )
+		if ( mainFrame == null )
 		{
-			main_frame = new MainFrame();
-			main_frame.setTitle( "Jogo Monopoly" );
-			main_frame.setVisible( true );
+			mainFrame = new MainFrame();
+			mainFrame.setTitle( "Jogo Monopoly" );
+			mainFrame.setVisible( true );
 		}
-		return main_frame;
+		return mainFrame;
 	}
 
 	public void ScreenManager()

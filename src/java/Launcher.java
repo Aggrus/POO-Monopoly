@@ -15,10 +15,9 @@ public class Launcher
 	public static void main( final String[] args )
 	{
 		Game.setOn( true );
-		Game.setNumPlayers( 0 );
 		Game.createEmptyDeck();
 		ApplyRules.shuffleDeck();
-		MainFrame.getMainFrame();
+		MainFrame.getInstance();
 	}
 
 }

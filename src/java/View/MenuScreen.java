@@ -6,9 +6,12 @@ import java.awt.event.*;
 import java.io.*;
 import javax.imageio.*;
 
+import Controller.MenuController;
+
 class MenuScreen extends JPanel implements MouseListener {
     private static int window_width;
     private static int window_height;
+    private static boolean new_game = false;
 
     private static MenuScreen menu_screen = null;
 
@@ -19,7 +22,7 @@ class MenuScreen extends JPanel implements MouseListener {
         addMouseListener(this);
     }
     
-    public static MenuScreen getMenuScreen(int w, int h) {
+    public static MenuScreen getInstance(int w, int h) {
         if (menu_screen == null) {
             menu_screen = new MenuScreen(w, h);
         }
@@ -30,12 +33,37 @@ class MenuScreen extends JPanel implements MouseListener {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         Font header_font, gamemode_font;
+        header_font = new Font("SansSerif", Font.BOLD, 25);
+        gamemode_font = new Font("SansSerif", Font.BOLD, 18);
 
         draw_images(g2d);
 
-        header_font = new Font("SansSerif", Font.BOLD, 25);
-        draw_alligned_header(g2d, "Novo Jogo:", header_font, Color.WHITE, 140);
+        if (!new_game) {
+            draw_startgame_options(g2d, header_font, gamemode_font);
+        }
+        else {
+            draw_numplayers_options(g2d, header_font, gamemode_font);
+        }
 
+      
+
+    }
+
+    private void draw_startgame_options (Graphics2D g2d, Font header_font, Font gamemode_font) {
+        draw_alligned_header(g2d, "Começar jogo:", header_font, Color.WHITE, 140);
+        Rectangle2D rect2 = new Rectangle2D.Double(712, 170, 220, 50);
+        g2d.setPaint(Color.WHITE);
+        g2d.fill(rect2);
+        Rectangle2D rect3 = new Rectangle2D.Double(712, 250, 220, 50);
+        g2d.setPaint(Color.WHITE);
+        g2d.fill(rect3);
+
+        draw_str_in_rect(g2d, "Novo Jogo", gamemode_font, Color.BLACK, rect2);    
+        draw_str_in_rect(g2d, "Carregar Jogo", gamemode_font, Color.BLACK, rect3); 
+    }
+
+    private void draw_numplayers_options(Graphics2D g2d, Font header_font, Font gamemode_font) {
+        draw_alligned_header(g2d, "Novo Jogo:", header_font, Color.WHITE, 140);
         Rectangle2D rect2 = new Rectangle2D.Double(712, 170, 220, 50);
         g2d.setPaint(Color.WHITE);
         g2d.fill(rect2);
@@ -52,7 +80,6 @@ class MenuScreen extends JPanel implements MouseListener {
         g2d.setPaint(Color.WHITE);
         g2d.fill(rect6);
 
-        gamemode_font = new Font("SansSerif", Font.BOLD, 18);
         draw_str_in_rect(g2d, "2 Jogadores", gamemode_font, Color.BLACK, rect2);    
         draw_str_in_rect(g2d, "3 Jogadores", gamemode_font, Color.BLACK, rect3);    
         draw_str_in_rect(g2d, "4 Jogadores", gamemode_font, Color.BLACK, rect4);    
@@ -98,23 +125,36 @@ class MenuScreen extends JPanel implements MouseListener {
 
         System.out.printf("x = %d\ny = %d\n", x, y);
 
-        if (x >= 712 && x <= 712 + 220) {
-            if (y >= 170 && y <= 170 + 50){
-                MainFrame.getMainFrame().set_num_players(2);
+        if (new_game == true) { 
+            if (x >= 712 && x <= 712 + 220) {
+                if (y >= 170 && y <= 170 + 50){
+                    MenuController.getInstance().set_num_players(2);
+                }
+                else if (y >= 250 && y <= 250 + 50){
+                    MenuController.getInstance().set_num_players(3);
+                }
+                else if (y >= 330 && y <= 330 + 50){
+                    MenuController.getInstance().set_num_players(4);
+                }
+                else if (y >= 410 && y <= 410 + 50){
+                    MenuController.getInstance().set_num_players(5);
+                }
+                else if (y >= 490 && y <= 490 + 50){
+                    MenuController.getInstance().set_num_players(6);
+                }
             }
-            else if (y >= 250 && y <= 250 + 50){
-                MainFrame.getMainFrame().set_num_players(3);
-            }
-            else if (y >= 330 && y <= 330 + 50){
-                MainFrame.getMainFrame().set_num_players(4);
-            }
-            else if (y >= 410 && y <= 410 + 50){
-                MainFrame.getMainFrame().set_num_players(5);
-            }
-            else if (y >= 490 && y <= 490 + 50){
-                MainFrame.getMainFrame().set_num_players(6);
-            }
-        }   
+        }
+        else {
+            if (x >= 712 && x <= 712 + 220) {
+                if (y >= 170 && y <= 170 + 50){
+                    new_game = true;
+                    repaint();
+                }
+                // else if (y >= 250 && y <= 250 + 50){
+                   
+                // }
+            }    
+        }       
     }
 
     public void mouseEntered(MouseEvent e) {}
