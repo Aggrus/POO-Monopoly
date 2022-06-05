@@ -2,8 +2,6 @@ package Controller;
 
 import model.Game;
 
-import View.MainFrame;
-
 public class MenuController {
     private static MenuController menu_controller = null;
 
@@ -15,7 +13,6 @@ public class MenuController {
         } 
         return menu_controller;
     }
-
 
     public void set_num_players(int num_players) {
         Game.setNumPlayers(num_players);
