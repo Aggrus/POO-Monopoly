@@ -25,7 +25,7 @@ public class Game
 
 	private static List<Player> playerList;
 
-	private static List<AbstractTile> properties;
+	private static List<AbstractTile> tiles;
 
 	private Game()
 	{
@@ -90,11 +90,11 @@ public class Game
 	 * </p>
 	 *
 	 * @return Returns the board.
-	 * @see #properties
+	 * @see #tiles
 	 */
 	public static List<AbstractTile> getTiles()
 	{
-		return properties;
+		return tiles;
 	}
 
 	/**
@@ -142,11 +142,11 @@ public class Game
 	 *
 	 * @param board
 	 *            The board to set.
-	 * @see #properties
+	 * @see #tiles
 	 */
 	public static void setTiles( final List<AbstractTile> board )
 	{
-		properties = board;
+		tiles = board;
 	}
 
 	@Override

@@ -13,9 +13,11 @@ import java.util.Random;
 class Dice
 {
 
-	private static Random diceOne;
+	private static Integer diceOne;
 
-	private static Random diceTwo;
+	final private static Integer diceSize = 6;
+
+	private static Integer diceTwo;
 
 	/**
 	 * <p>
@@ -23,8 +25,14 @@ class Dice
 	 */
 	public Dice()
 	{
-		diceOne = new Random();
-		diceTwo = new Random();
+		diceOne = 0;
+		diceTwo = 0;
+	}
+
+	private static Integer getRoll()
+	{
+		final Random roll = new Random();
+		return 1 + roll.nextInt( diceSize - 1 );
 	}
 
 	public static ArrayList<Integer> moveRoll()
@@ -37,14 +45,25 @@ class Dice
 		return roll;
 	}
 
+	public static void setDice( final Integer diceOne, final Integer diceTwo )
+	{
+		Dice.diceOne = diceOne;
+		Dice.diceTwo = diceTwo;
+	}
+
 	public static ArrayList<Integer> simpleRoll()
 	{
 		final ArrayList<Integer> dice = new ArrayList<Integer>();
 
-		final Integer rollOne = diceOne.nextInt( 6 );
-		final Integer rollTwo = diceTwo.nextInt( 6 );
-		dice.add( rollOne );
-		dice.add( rollTwo );
+		if ( diceOne.equals( 0 ) && diceTwo.equals( 0 ) )
+		{
+			diceOne = getRoll();
+			diceTwo = getRoll();
+		}
+		dice.add( diceOne );
+		dice.add( diceTwo );
+
+		diceOne = diceTwo = 0;
 		return dice;
 	}
 
