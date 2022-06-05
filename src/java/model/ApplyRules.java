@@ -32,7 +32,7 @@ public class ApplyRules
 		{
 			deck.clear();
 		}
-		final String contextPath = "../data/sorteReves";
+		final String contextPath = "src/java/data/sorteReves";
 		Integer id = 1;
 		deck.add( new DefaultCard( id, true, contextPath + "chance" + id + ".png", Long.valueOf( 25 ) ) );
 		id++;
