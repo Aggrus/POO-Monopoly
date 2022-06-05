@@ -2,8 +2,6 @@ package View;
 import javax.swing.*;
 import java.awt.*;
 
-import Controller.MenuController;
-import Controller.Observer.Observable;
 import Controller.Observer.Observer;
 
 public class MainFrame extends JFrame implements Observer{

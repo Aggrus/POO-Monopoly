@@ -86,11 +86,11 @@ class Property
 
 	private boolean canBuild()
 	{
-		final Stream<Property> thisGroup = Game
-			.getProperties()
+		final Stream<AbstractTile> thisGroup = Game
+			.getTiles()
 			.stream()
 			.filter( t -> t.getGorup().equals( getGorup() ) );
-		return thisGroup.allMatch( t -> getBuildings().size() <= t.getBuildings().size() );
+		return thisGroup.allMatch( t -> getBuildings().size() <= ( ( Property ) t ).getBuildings().size() );
 	}
 
 	private boolean canBuildHotel()
@@ -120,10 +120,11 @@ class Property
 	private boolean checkGroupOwner()
 	{
 		final Player owner = getOwner();
-		final Stream<Property> thisGroup = Game
-			.getProperties()
+		final Stream<AbstractTile> thisGroup = Game
+			.getTiles()
 			.stream()
 			.filter( t -> t.getGorup().equals( getGorup() ) );
+		;
 
 		return ( thisGroup.allMatch( t -> t.getOwner().equals( owner ) ) );
 	}
