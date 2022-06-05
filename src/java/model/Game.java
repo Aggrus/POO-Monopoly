@@ -3,31 +3,43 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import Controller.Observer.Observable;
+import Controller.Observer.Observer;
+
 /**
  * <p>
  * </p>
  *
- * @author gugaz
+ * @author gugaz, arthurxvtv
  * @version 1.0 Created on May 8, 2022
  */
-public class Game
+public class Game implements Observable
 {
 
 	private static List<AbstractCard> cards;
 
-	private static Integer numPlayers;
+	private static int numPlayers;
 
 	private static List<Player> playerList;
 
 	private static List<Property> properties;
 
-	private Game()
-	{
+	private List<Observer> observadores = new ArrayList<Observer>();
+
+	private static Game game = null;
+
+	private Game() {}
+
+	public static Game getInstance() {
+		if (game == null) {
+			game = new Game();
+		}
+		return game;
 	}
 
 	public static List<AbstractCard> createEmptyDeck()
 	{
-		Game.cards = new ArrayList();
+		cards = new ArrayList();
 		return cards;
 	}
 
@@ -50,9 +62,8 @@ public class Game
 	 * @return Returns the numPlayers.
 	 * @see #numPlayers
 	 */
-	public static Integer getNumPlayers()
-	{
-		return Game.numPlayers;
+	public static Integer getNumPlayers() {
+		return numPlayers;
 	}
 
 	/**
@@ -64,7 +75,7 @@ public class Game
 	 */
 	public static List<Player> getPlayerList()
 	{
-		return Game.playerList;
+		return playerList;
 	}
 
 	/**
@@ -87,9 +98,9 @@ public class Game
 	 *            The cards to set.
 	 * @see #cards
 	 */
-	public static void setCards( final List<AbstractCard> cards )
+	public static void setCards( final List<AbstractCard> cards_list )
 	{
-		Game.cards = cards;
+		cards = cards_list;
 	}
 
 	/**
@@ -100,9 +111,8 @@ public class Game
 	 *            The numPlayers to set.
 	 * @see #numPlayers
 	 */
-	public static void setNumPlayers( final Integer numPlayers )
-	{
-		Game.numPlayers = numPlayers;
+	public static void setNumPlayers( final int num_players ) {
+		numPlayers = num_players;
 	}
 
 	/**
@@ -113,9 +123,9 @@ public class Game
 	 *            The playerList to set.
 	 * @see #playerList
 	 */
-	public static void setPlayerList( final List<Player> playerList )
+	public static void setPlayerList( final List<Player> player_list )
 	{
-		Game.playerList = playerList;
+		playerList = player_list;
 	}
 
 	/**
@@ -128,7 +138,20 @@ public class Game
 	 */
 	public static void setProperties( final List<Property> board )
 	{
-		Game.properties = board;
+		properties = board;
+	}
+
+
+	// implementações do design patter Observer
+
+	public void add(Observer o) {
+		observadores.add(o);
+		o.notify(getNumPlayers());
+	}
+
+	public void remove(Observer o) {
+		observadores.remove(o);
 	}
 
 }
+
