@@ -5,7 +5,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
-import model.Game;
+import Controller.Observer.Observer;
 
 public class MainFrame
 	extends JFrame
@@ -14,7 +14,7 @@ public class MainFrame
 
 	private static MainFrame mainFrame = null;
 
-	private static int num_players = 0;
+	private static int numPlayers = 0;
 
 	private MainFrame()
 	{
@@ -40,28 +40,6 @@ public class MainFrame
 		return mainFrame;
 	}
 
-	public void ScreenManager()
-	{
-		if ( num_players == 0 )
-		{
-			getContentPane().add( MenuScreen.getMenuScreen( this.DFLT_WIDTH, this.DFLT_HEIGHT ) );
-		}
-		else
-		{
-			getContentPane().removeAll();
-			getContentPane().add( GameScreen.getGameScreen( this.DFLT_WIDTH, this.DFLT_HEIGHT ) );
-			getContentPane().revalidate();
-			getContentPane().repaint();
-		}
-	}
-
-	public void set_num_players( final int n )
-	{
-		num_players = n;
-		System.out.printf( "num_players = %d\n", num_players );
-		ScreenManager();
-	}
-
 	/**
 	 * <p>
 	 * </p>
@@ -70,9 +48,31 @@ public class MainFrame
 	 * @see View.Observer#update(java.lang.Object)
 	 */
 	@Override
-	public void update( final Object o )
+	public void notify( final int msg )
 	{
-		num_players = Game.getNumPlayers();
+		numPlayers = msg;
+		ScreenManager();
+	}
+
+	public void ScreenManager()
+	{
+		if ( numPlayers == 0 )
+		{
+			getContentPane().add( MenuScreen.getInstance( this.DFLT_WIDTH, this.DFLT_HEIGHT ) );
+		}
+		else
+		{
+			getContentPane().removeAll();
+			getContentPane().add( GameScreen.getInstance( this.DFLT_WIDTH, this.DFLT_HEIGHT ) );
+			getContentPane().revalidate();
+			getContentPane().repaint();
+		}
+	}
+
+	public void set_num_players( final int n )
+	{
+		numPlayers = n;
+		System.out.printf( "num_players = %d\n", numPlayers );
 		ScreenManager();
 	}
 

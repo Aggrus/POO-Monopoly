@@ -19,6 +19,6 @@ public class MenuController {
 
     public void set_num_players(int num_players) {
         Game.setNumPlayers(num_players);
-        Game.getInstance().add(View.MainFrame.getInstance());
+        Game.getInstance().add(MainFrame.getInstance());
     }
 }
