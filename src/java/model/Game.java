@@ -13,33 +13,30 @@ import Controller.Observer.Observer;
  * @author gugaz, arthurxvtv
  * @version 1.0 Created on May 8, 2022
  */
-public class Game implements Observable
+public class Game
+	implements Observable
 {
 
 	private static List<AbstractCard> cards;
+
+	private static Game game = null;
 
 	private static int numPlayers;
 
 	private static List<Player> playerList;
 
-	private static List<Property> properties;
+	private static List<AbstractTile> properties;
 
-	private List<Observer> observadores = new ArrayList<Observer>();
-
-	private static Game game = null;
-
-	private Game() {}
-
-	public static Game getInstance() {
-		if (game == null) {
-			game = new Game();
-		}
-		return game;
+	private Game()
+	{
+		createEmptyDeck();
+		setPlayerList( new ArrayList<Player>() );
+		setTiles( new ArrayList<AbstractTile>() );
 	}
 
 	public static List<AbstractCard> createEmptyDeck()
 	{
-		cards = new ArrayList();
+		cards = new ArrayList<AbstractCard>();
 		return cards;
 	}
 
@@ -55,6 +52,15 @@ public class Game implements Observable
 		return cards;
 	}
 
+	public static Game getInstance()
+	{
+		if ( game == null )
+		{
+			game = new Game();
+		}
+		return game;
+	}
+
 	/**
 	 * <p>
 	 * </p>
@@ -62,7 +68,8 @@ public class Game implements Observable
 	 * @return Returns the numPlayers.
 	 * @see #numPlayers
 	 */
-	public static Integer getNumPlayers() {
+	public static Integer getNumPlayers()
+	{
 		return numPlayers;
 	}
 
@@ -85,7 +92,7 @@ public class Game implements Observable
 	 * @return Returns the board.
 	 * @see #properties
 	 */
-	public static List<Property> getProperties()
+	public static List<AbstractTile> getTiles()
 	{
 		return properties;
 	}
@@ -111,7 +118,8 @@ public class Game implements Observable
 	 *            The numPlayers to set.
 	 * @see #numPlayers
 	 */
-	public static void setNumPlayers( final int num_players ) {
+	public static void setNumPlayers( final int num_players )
+	{
 		numPlayers = num_players;
 	}
 
@@ -136,22 +144,26 @@ public class Game implements Observable
 	 *            The board to set.
 	 * @see #properties
 	 */
-	public static void setProperties( final List<Property> board )
+	public static void setTiles( final List<AbstractTile> board )
 	{
 		properties = board;
 	}
 
+	@Override
+	public void add( final Observer o )
+	{
+		this.observadores.add( o );
+		o.notify( getNumPlayers() );
+	}
 
 	// implementações do design patter Observer
 
-	public void add(Observer o) {
-		observadores.add(o);
-		o.notify(getNumPlayers());
+	@Override
+	public void remove( final Observer o )
+	{
+		this.observadores.remove( o );
 	}
 
-	public void remove(Observer o) {
-		observadores.remove(o);
-	}
+	private List<Observer> observadores = new ArrayList<Observer>();
 
 }
-
