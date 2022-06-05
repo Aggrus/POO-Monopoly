@@ -2,6 +2,8 @@ package View;
 import javax.swing.*;
 import java.awt.*;
 
+import Controller.MenuController;
+import Controller.Observer.Observable;
 import Controller.Observer.Observer;
 
 public class MainFrame extends JFrame implements Observer{
@@ -32,17 +34,14 @@ public class MainFrame extends JFrame implements Observer{
         return main_frame;
     }
 
-    public void set_num_players (int n) {
-
-    }
-
+    //  Método que troca os painéis da exibidos na janela
     public void ScreenManager () {
         if (num_players == 0) {
             getContentPane().add(MenuScreen.getInstance(DFLT_WIDTH, DFLT_HEIGHT));
         }
         else {
             getContentPane().removeAll();
-            getContentPane().add(GameScreen.getInstance(DFLT_WIDTH, DFLT_HEIGHT));
+            getContentPane().add(GameScreen.getInstance(DFLT_WIDTH, DFLT_HEIGHT, num_players));
             getContentPane().revalidate();
             getContentPane().repaint();
         } 
@@ -54,3 +53,4 @@ public class MainFrame extends JFrame implements Observer{
         ScreenManager();
     }
 }
+
