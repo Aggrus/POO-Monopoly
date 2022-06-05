@@ -97,7 +97,7 @@ class MenuScreen extends JPanel implements MouseListener {
             g.drawImage(img_box, 37, (window_height - img_box.getHeight(null))/2, null);
         }
         catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             System.exit(1);
         }
 
