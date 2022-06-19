@@ -1,5 +1,7 @@
 package Controller;
 
+import View.GameScreen;
+import View.MainFrame;
 import model.ApplyRules;
 import model.Game;
 
@@ -15,7 +17,7 @@ public class GameController {
         return game_controller;
     }
 
-    public static void createPlayers()
+    public void createPlayers()
     {
         ApplyRules.createPlayers();
     }

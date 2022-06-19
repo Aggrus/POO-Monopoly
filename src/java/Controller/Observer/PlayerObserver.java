@@ -4,13 +4,9 @@ import enums.PlayerColorEnum;
 
 public interface PlayerObserver extends Observer
 {
-    public void nofityBoardPosition(Integer boardPosition);
-    public void nofityColor(PlayerColorEnum color);
-    public void notifyFreeRide(boolean freeRide);
-    public void notifyInPrision(boolean inPrision);
-    public void notifyMoney(Long money);
-    public void notifyPrisionTime(Integer prisionTime);
-    public void notifyRoundTrips(Integer roundTrips);
-
+    public void nofityBoardPosition(Integer boardPosition,  Integer playerId);
+    //public void notifyFreeRide(boolean freeRide,  Integer playerId);
+    public void notifyMoney(Long money,  Integer playerId);
+    public void notifyPrisionTime(Integer prisionTime,  Integer playerId);
 	//private boolean inGame needed?
 }
