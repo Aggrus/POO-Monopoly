@@ -227,11 +227,11 @@ public class ApplyRules
 		boardPosition++;
 		board.add(new Property(boardPosition, Long.valueOf(30), Long.valueOf(4), TileColorEnum.PINK, new Long[] {Long.valueOf(20),Long.valueOf(60),Long.valueOf(180),Long.valueOf(320),Long.valueOf(450)}, Long.valueOf(50)));
 		boardPosition++;
-		board.add(new CompanyTile(Long.valueOf(100), 50));
+		board.add(new CompanyTile(Long.valueOf(100), 50, boardPosition));
 		boardPosition++;
 		board.add(new Property(boardPosition, Long.valueOf(150), Long.valueOf(20), TileColorEnum.BLUE, new Long[] {Long.valueOf(100),Long.valueOf(300),Long.valueOf(750),Long.valueOf(925),Long.valueOf(1100)}, Long.valueOf(150)));
 		boardPosition++;
-		board.add(new CompanyTile(Long.valueOf(100), 50));
+		board.add(new CompanyTile(Long.valueOf(100), 50, boardPosition));
 		boardPosition++;
 		board.add(new Property(boardPosition, Long.valueOf(110), Long.valueOf(18), TileColorEnum.BLUE, new Long[] {Long.valueOf(90),Long.valueOf(250),Long.valueOf(700),Long.valueOf(875),Long.valueOf(1050)}, Long.valueOf(150)));
 		boardPosition++;
@@ -247,7 +247,7 @@ public class ApplyRules
 		boardPosition++;
 		board.add(new Property(boardPosition, Long.valueOf(90), Long.valueOf(14), TileColorEnum.PURPLE, new Long[] {Long.valueOf(70),Long.valueOf(200),Long.valueOf(550),Long.valueOf(750),Long.valueOf(950)}, Long.valueOf(100)));
 		boardPosition++;
-		board.add(new CompanyTile(Long.valueOf(75), 40));
+		board.add(new CompanyTile(Long.valueOf(75), 40, boardPosition));
 		boardPosition++;
 		board.add(new DrawCardTile(boardPosition));
 		boardPosition++;
@@ -267,7 +267,7 @@ public class ApplyRules
 		boardPosition++;
 		board.add(new TaxesTile(boardPosition));
 		boardPosition++;
-		board.add(new CompanyTile(Long.valueOf(75), 40));
+		board.add(new CompanyTile(Long.valueOf(75), 40, boardPosition));
 		boardPosition++;
 		board.add(new Property(boardPosition, Long.valueOf(80), Long.valueOf(12), TileColorEnum.YELLOW, new Long[] {Long.valueOf(60),Long.valueOf(180),Long.valueOf(500),Long.valueOf(700),Long.valueOf(900)}, Long.valueOf(100)));
 		boardPosition++;
@@ -281,13 +281,13 @@ public class ApplyRules
 		boardPosition++;
 		board.add(new Property(boardPosition, Long.valueOf(130), Long.valueOf(22), TileColorEnum.GREEN, new Long[] {Long.valueOf(110),Long.valueOf(330),Long.valueOf(800),Long.valueOf(975),Long.valueOf(1150)}, Long.valueOf(150)));
 		boardPosition++;
-		board.add(new CompanyTile(Long.valueOf(100), 50));
+		board.add(new CompanyTile(Long.valueOf(100), 50, boardPosition));
 		boardPosition++;
 		board.add(new Property(boardPosition, Long.valueOf(160), Long.valueOf(28), TileColorEnum.GREEN, new Long[] {Long.valueOf(150),Long.valueOf(450),Long.valueOf(1000),Long.valueOf(1200),Long.valueOf(1400)}, Long.valueOf(200)));
 		boardPosition++;
 		board.add(new Property(boardPosition, Long.valueOf(150), Long.valueOf(26), TileColorEnum.GREEN, new Long[] {Long.valueOf(130),Long.valueOf(390),Long.valueOf(900),Long.valueOf(1100),Long.valueOf(1275)}, Long.valueOf(200)));
 		boardPosition++;
-		board.add(new CompanyTile(Long.valueOf(100), 50));
+		board.add(new CompanyTile(Long.valueOf(100), 50, boardPosition));
 		boardPosition++;
 		board.add(new Property(boardPosition, Long.valueOf(150), Long.valueOf(26), TileColorEnum.GREEN, new Long[] {Long.valueOf(130),Long.valueOf(390),Long.valueOf(900),Long.valueOf(1100),Long.valueOf(1275)}, Long.valueOf(200)));
 		boardPosition++;
@@ -365,4 +365,26 @@ public class ApplyRules
 		}
 		return "Compra feita com sucesso!";
 	}
+
+	public static void sellBuilding(Integer playerId, Integer propertyPos)
+	{
+		Player player = Game.getPlayerList().get(playerId);
+		Property sellingTile = (Property)Game.getTiles().get(propertyPos);
+		player.loseMoney( -sellingTile.sellBuilding());
+	}
+
+	public static void sellTile(Integer playerId, Integer propertyPos)
+	throws IllegalRuleException
+	{
+		Player player = Game.getPlayerList().get(playerId);
+		AbstractTile sellingTile = Game.getTiles().get(propertyPos);
+		if (sellingTile.getCanPurchase() || !sellingTile.getOwner().equals(player))
+		{
+			throw new IllegalRuleException("Esta casa não pertence a você!!!");
+		}
+		player.loseMoney( -sellingTile.getValue());
+		sellingTile.setCanPurchase(true);
+		sellingTile.setOwner(null);
+	}
+
 }
