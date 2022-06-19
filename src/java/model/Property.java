@@ -35,6 +35,19 @@ class Property
 		setBuildingValue(buildingValue);
 	}
 
+	public Property (Property property)
+	{
+		setBoardPosition(property.getBoardPosition());
+		setValue(property.getValue());
+		setRentIncreases( property.getRentIncreases() );
+		setGorup( property.getGorup() );
+		setRent( property.getRent() );
+		setCanPurchase( property.getCanPurchase() );
+		setSpecialProperty( property.getSpecialProperty() );
+		setOwner( property.getOwner() );
+		setBuildingValue(property.getBuildingValue());
+	}
+
 	private void addBuilding( final Player player, final Building building )
 		throws WrongPlayerException, IllegalRuleException
 	{
@@ -76,6 +89,12 @@ class Property
 		player.loseMoney( building.getPrice() );
 		return true;
 
+	}
+
+	public Long sellBuilding()
+	{
+		this.buildings.remove(this.buildings.size() - 1);
+		return buildingValue;
 	}
 
 	public void buyProperty( final Player player )

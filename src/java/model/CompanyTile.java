@@ -17,15 +17,28 @@ class CompanyTile
 	/**
 	 * <p>
 	 * </p>
+	 * @param boardPosition 
 	 */
-	public CompanyTile( final Long value, final Integer multiplier )
+	public CompanyTile( final Long value, final Integer multiplier, Integer boardPosition )
 	{
+		setBoardPosition(boardPosition);
 		setMultiplier( multiplier );
 		setCanPurchase( true );
 		setGorup( null );
 		setOwner( null );
 		setSpecialProperty( TileEnum.NONE );
 		setValue( value );
+	}
+
+	public CompanyTile (CompanyTile company)
+	{
+		setBoardPosition(company.getBoardPosition());
+		setValue(company.getValue());
+		setMultiplier( multiplier );
+		setGorup( company.getGorup() );
+		setCanPurchase( company.getCanPurchase() );
+		setSpecialProperty( company.getSpecialProperty() );
+		setOwner( company.getOwner() );
 	}
 
 	public void buyCompany( final Player player )

@@ -1,7 +1,9 @@
 package model;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import Controller.Observer.Observable;
 import Controller.Observer.Observer;
@@ -35,7 +37,7 @@ class Player
 		this.color = color;
 		this.money = Long.valueOf( 4000 );
 		this.inGame = true;
-		this.boardPosition = 33;
+		this.boardPosition = 0;
 		this.inPrision = false;
 		this.prisionTime = 0;
 		this.roundTrips = 0;
@@ -168,9 +170,77 @@ class Player
 
 	public void playerStatus()
 	{
-		if ( getMoney() <= 0 )
+		while (getMoney() <= 0 && isInGame())
 		{
-			setInGame( false );
+			if (hasTile())
+			{
+				forcedSale();
+			}
+			else
+			{
+				setInGame( false );
+			}
+		}
+	}
+
+	public boolean hasTile()
+	{
+		return Game.getTiles().stream().anyMatch(tile -> tile.getOwner().equals(this));
+	}
+
+	private void forcedSale()
+	{
+		List<AbstractTile> ownedTiles = Game.getTiles().stream().filter(tile -> tile.getOwner().equals(this)).collect(Collectors.toList());
+		List<AbstractTile> ownedProperties = ownedTiles.stream().filter(tile -> tile.getGorup() != null).collect(Collectors.toList());
+		List<AbstractTile> tilesWithBuildings = ownedProperties.stream().filter(tile -> ((Property)tile).getBuildings().size() > 0).collect(Collectors.toList());
+		if (tilesWithBuildings.size() > 0)
+		{
+			Long max = (long)0;
+			Property maxBuildingCostTile = null;
+			for (AbstractTile tile : tilesWithBuildings)
+			{
+				Property property = ((Property)tile);
+				if (property.getBuildingValue() > max)
+				{
+					max = property.getBuildingValue();
+					maxBuildingCostTile = new Property(property);
+				}
+			}
+			loseMoney( -maxBuildingCostTile.sellBuilding());
+		}
+		else if (tilesWithBuildings.size() == 0)
+		{
+			Long max = (long)0;
+			CompanyTile maxCostTile = null;
+			for (AbstractTile tile : tilesWithBuildings)
+			{
+				CompanyTile company = ((CompanyTile)tile);
+				if (company.getValue() > max)
+				{
+					max = company.getValue();
+					maxCostTile = new CompanyTile(company);
+				}
+			}
+			loseMoney( -maxCostTile.getValue());
+			tilesWithBuildings.get(maxCostTile.getBoardPosition()).setCanPurchase(true);
+			tilesWithBuildings.get(maxCostTile.getBoardPosition()).setOwner(null);
+		}
+		else
+		{
+			Long max = (long)0;
+			Property maxCostTile = null;
+			for (AbstractTile tile : tilesWithBuildings)
+			{
+				Property property = ((Property)tile);
+				if (property.getValue() > max)
+				{
+					max = property.getValue();
+					maxCostTile = new Property(property);
+				}
+			}
+			loseMoney( -maxCostTile.getValue());
+			tilesWithBuildings.get(maxCostTile.getBoardPosition()).setCanPurchase(true);
+			tilesWithBuildings.get(maxCostTile.getBoardPosition()).setOwner(null);
 		}
 	}
 
