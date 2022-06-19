@@ -305,14 +305,17 @@ public class ApplyRules
 
 	public static void createPlayers()
 	{
-		List<Player> players = new ArrayList<Player>(6);
-		while (players.size() < Game.getNumPlayers())
+		if (Game.getPlayerList().size() == 0)
 		{
-			players.add(new Player(PlayerColorEnum.values()[players.size()]));
-			players.get(players.size() - 1).add(GameScreen.getInstance(MainFrame.WIDTH, MainFrame.HEIGHT, Game.getNumPlayers()));
+			List<Player> players = new ArrayList<Player>(6);
+			while (players.size() < Game.getNumPlayers())
+			{
+				players.add(new Player(PlayerColorEnum.values()[players.size()]));
+				players.get(players.size() - 1).add(GameScreen.getInstance(MainFrame.WIDTH, MainFrame.HEIGHT, Game.getNumPlayers()));
+			}
+			//Instantiate a list of players on position 0
+			Game.setPlayerList(players);
 		}
-		//Instantiate a list of players on position 0
-		Game.setPlayerList(players);
 	}
 
 	public static boolean checkPlayerFreed( final List<Integer> roll, final Integer playerId )

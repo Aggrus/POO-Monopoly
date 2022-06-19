@@ -33,6 +33,7 @@ class Property
 		setSpecialProperty( TileEnum.NONE );
 		setOwner( null );
 		setBuildingValue(buildingValue);
+		this.firstRent = rent;
 	}
 
 	public Property (Property property)
@@ -46,6 +47,7 @@ class Property
 		setSpecialProperty( property.getSpecialProperty() );
 		setOwner( property.getOwner() );
 		setBuildingValue(property.getBuildingValue());
+		this.firstRent = rent;
 	}
 
 	private void addBuilding( final Player player, final Building building )
@@ -93,7 +95,7 @@ class Property
 
 	public Long sellBuilding()
 	{
-		this.buildings.remove(this.buildings.size() - 1);
+		removeBuilding(this.buildings.get(this.buildings.size() - 1).getId());
 		return buildingValue;
 	}
 
@@ -222,6 +224,14 @@ class Property
 		if ( building.isPresent() )
 		{
 			this.buildings.remove( building.get() );
+			if (getBuildings().size() != 0)
+			{
+				setRent( this.rentIncreases[getBuildings().size() - 1] );
+			}
+			else
+			{
+				setRent(firstRent);
+			}
 		}
 		else
 		{
@@ -237,7 +247,7 @@ class Property
 	 *            The rent to set.
 	 * @see #rent
 	 */
-	private void setRent( final Long rent )
+	public void setRent( final Long rent )
 	{
 		this.rent = rent;
 	}
@@ -323,9 +333,19 @@ class Property
 		}
 	}
 
+	public String genSaveString() {
+		return String.format("casa %d, hotel %d, comprada %b, dono %d, aluguel %d", buildings.size(), hasHotel()?1:0, getCanPurchase(), getOwner().getColor() == null? -1: getOwner().getColor().getIndex(), getRent());
+	}
+
+	public void setBuildings(List<Building> buildings) {
+		this.buildings = buildings;
+	}
+
 	private Long buildingValue;
 
 	private List<Building> buildings;
+
+	private final Long firstRent;
 
 	private Long rent;
 
