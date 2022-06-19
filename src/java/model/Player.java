@@ -43,6 +43,17 @@ class Player
 		this.roundTrips = 0;
 		this.freeRide = false;
 	}
+	public Player( final PlayerColorEnum color, Long money, Integer boardPosition, boolean isInPrision, Integer prisionTime, boolean freeRide )
+	{
+		this.color = color;
+		this.money = money;
+		this.inGame = true;
+		this.boardPosition = boardPosition;
+		this.inPrision = isInPrision;
+		this.prisionTime = prisionTime;
+		this.roundTrips = 0;
+		this.freeRide = freeRide;
+	}
 
 	@Override
 	public void add( final Observer o )
@@ -358,6 +369,17 @@ class Player
 			observerFromList.get().notifyPrisionTime( this.prisionTime, this.color.getIndex() );
 		}
 
+	}
+
+	public String genSaveString() {
+		String ret = "";
+		
+		ret += String.format("casa %d, money %d, cartaSair %b, preso %b, rodadasNaPrisao %d;\n",
+				boardPosition, money, isFreeRide(), isInPrision(), prisionTime);
+		
+		//ret += "\t\tpropriedades: " + propriedades.toString();
+		
+		return ret;
 	}
 
 	private Integer boardPosition;
