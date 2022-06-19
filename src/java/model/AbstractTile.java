@@ -1,5 +1,11 @@
 package model;
 
+import java.util.List;
+import java.util.Optional;
+
+import Controller.Observer.Observable;
+import Controller.Observer.Observer;
+import Controller.Observer.TileObserver;
 import enums.TileColorEnum;
 import enums.TileEnum;
 
@@ -11,7 +17,7 @@ import enums.TileEnum;
  * @version 1.0 Created on May 8, 2022
  */
 
-abstract class AbstractTile
+abstract class AbstractTile implements Observable
 {
 
 	/**
@@ -164,7 +170,51 @@ abstract class AbstractTile
 		this.value = value;
 	}
 
-	public abstract void tileRule( Player player );
+	public void add(Observer o)
+	{
+		this.add((TileObserver)o);
+	}
+
+	public void remove(Observer o)
+	{
+		this.remove((TileObserver)o);
+	}
+
+	public void update(Observer o)
+	{
+		update((TileObserver)o);
+	}
+
+	private void add(TileObserver o)
+	{
+		observer.add(o);
+		o.notifyBoardPosition(this.boardPosition);
+		o.notifyCanPurchase(this.canPurchase);
+		o.notifyGroup(this.group);
+		o.notifyOwner(this.owner.getColor());
+		o.nofityValue(this.value);
+	}
+
+	private void remove(TileObserver o)
+	{
+		this.observer.remove( o );
+	}
+
+	private void update(TileObserver o)
+	{
+		Optional<TileObserver> observerFromList = observer.stream().filter(obs-> obs.equals(o)).findAny();
+		if (observerFromList.isPresent())
+		{
+			observerFromList.get().notifyBoardPosition(this.boardPosition);
+			observerFromList.get().notifyCanPurchase(this.canPurchase);
+			observerFromList.get().notifyGroup(this.group);
+			observerFromList.get().notifyOwner(this.owner.getColor());
+			observerFromList.get().nofityValue(this.value);
+		}
+	}
+
+
+	public abstract void tileRule( Integer playerId );
 
 	private Integer boardPosition;
 
@@ -177,5 +227,7 @@ abstract class AbstractTile
 	private TileEnum specialProperty;
 
 	private Long value;
+
+	List<TileObserver> observer;
 
 }

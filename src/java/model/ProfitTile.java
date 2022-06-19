@@ -16,9 +16,11 @@ class ProfitTile
 	/**
 	 * <p>
 	 * </p>
+	 * @param boardPosition 
 	 */
-	public ProfitTile()
+	public ProfitTile(Integer boardPosition)
 	{
+		setBoardPosition(boardPosition);
 		setCanPurchase( false );
 		setGorup( null );
 		setOwner( null );
@@ -34,8 +36,9 @@ class ProfitTile
 	 * @see model.AbstractTile#tileRule(model.Player)
 	 */
 	@Override
-	public void tileRule( final Player player )
+	public void tileRule( final Integer playerId )
 	{
+		Player player = Game.getPlayerList().get(playerId);
 		final Long amount = player.getMoney() + getValue();
 		player.setMoney( amount );
 	}

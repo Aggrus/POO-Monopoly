@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import Controller.Observer.Observer;
+import Controller.Observer.PropertyObserver;
 import Exception.IllegalRuleException;
 import Exception.WrongPlayerException;
 import enums.BuildingEnum;
@@ -20,24 +22,21 @@ import enums.TileEnum;
 class Property
 	extends AbstractTile
 {
-
-	public Property()
+	public Property( final  Integer boardPosition, Long value, final Long rent, final TileColorEnum color, final Long[] rentIncreases, Long buildingValue )
 	{
-		setSpecialProperty( TileEnum.NONE );
-		setCanPurchase( true );
-		setOwner( null );
-	}
-
-	public Property( final Long rent, final TileColorEnum color, final Long[] rentIncreases )
-	{
+		setBoardPosition(boardPosition);
+		setValue(value);
 		setRentIncreases( rentIncreases );
 		setGorup( color );
 		setRent( rent );
 		setCanPurchase( true );
+		setSpecialProperty( TileEnum.NONE );
+		setOwner( null );
+		setBuildingValue(buildingValue);
 	}
 
 	private void addBuilding( final Player player, final Building building )
-		throws WrongPlayerException
+		throws WrongPlayerException, IllegalRuleException
 	{
 		if ( getOwner().equals( player ) )
 		{
@@ -57,8 +56,9 @@ class Property
 		increaseRent();
 	}
 
-	public boolean buyBuilding( final Player player, final Building building )
+	public boolean buyBuilding( final Integer playerId, final Building building )
 	{
+		Player player = Game.getPlayerList().get(playerId);
 		try
 		{
 			addBuilding( player, building );
@@ -67,6 +67,12 @@ class Property
 		{
 			return false;
 		}
+		catch (final IllegalRuleException c)
+		{
+			c.printStackTrace();
+			return false;
+		}
+
 		player.loseMoney( building.getPrice() );
 		return true;
 
@@ -127,6 +133,14 @@ class Property
 		;
 
 		return ( thisGroup.allMatch( t -> t.getOwner().equals( owner ) ) );
+	}
+
+	public Long getBuildingValue() {
+		return buildingValue;
+	}
+
+	public void setBuildingValue(Long buildingValue) {
+		this.buildingValue = buildingValue;
 	}
 
 	/**
@@ -230,13 +244,67 @@ class Property
 	 * @see model.AbstractTile#tileRule(model.Player)
 	 */
 	@Override
-	public void tileRule( final Player player )
+	public void tileRule( final Integer playerId )
 	{
+		Player player = Game.getPlayerList().get(playerId);
 		if ( !player.equals( getOwner() ) )
 		{
 			player.loseMoney( getRent() );
 		}
 	}
+
+	public void add(Observer o)
+	{
+		this.add((PropertyObserver)o);
+	}
+
+	public void remove(Observer o)
+	{
+		this.remove((PropertyObserver)o);
+	}
+
+	public void update(Observer o)
+	{
+		update((PropertyObserver)o);
+	}
+
+	private void add(PropertyObserver o)
+	{
+		observer.add(o);
+		o.notifyBoardPosition(this.getBoardPosition());
+		o.notifyCanPurchase(this.getCanPurchase());
+		o.notifyGroup(this.getGorup());
+		o.notifyOwner(this.getOwner().getColor());
+		o.nofityValue(this.getValue());
+
+		o.notifyHasHotel(hasHotel());
+		o.nofityNumBuildings(buildings.size());
+		o.nofityRent(rent);
+	}
+
+	private void remove(PropertyObserver o)
+	{
+		this.observer.remove( o );
+	}
+
+	private void update(PropertyObserver o)
+	{
+		Optional<PropertyObserver> observerFromList = observer.stream().filter(obs-> obs.equals(o)).findAny();
+		if (observerFromList.isPresent())
+		{
+			o.notifyBoardPosition(this.getBoardPosition());
+			o.notifyCanPurchase(this.getCanPurchase());
+			o.notifyGroup(this.getGorup());
+			o.notifyOwner(this.getOwner().getColor());
+			o.nofityValue(this.getValue());
+
+			o.notifyHasHotel(hasHotel());
+			o.nofityNumBuildings(buildings.size());
+			o.nofityRent(rent);
+		}
+	}
+
+	private Long buildingValue;
 
 	private List<Building> buildings;
 
@@ -244,4 +312,5 @@ class Property
 
 	private Long[] rentIncreases;
 
+	List<PropertyObserver> observer;
 }

@@ -73,8 +73,9 @@ class CompanyTile
 	 * @see model.AbstractTile#tileRule(model.Player)
 	 */
 	@Override
-	public void tileRule( final Player player )
+	public void tileRule( final Integer playerId )
 	{
+		Player player = Game.getPlayerList().get(playerId);
 		if ( !player.equals( getOwner() ) )
 		{
 			final Integer rollTotal = Dice.simpleRoll().stream().mapToInt( r -> r ).sum();

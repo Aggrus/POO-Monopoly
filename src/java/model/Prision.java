@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 import enums.TileEnum;
 
 /**
@@ -16,9 +18,11 @@ class Prision
 	/**
 	 * <p>
 	 * </p>
+	 * @param boardPosition 
 	 */
-	public Prision()
+	public Prision(Integer boardPosition)
 	{
+		setBoardPosition(boardPosition);
 		setCanPurchase( false );
 		setGorup( null );
 		setOwner( null );
@@ -34,8 +38,10 @@ class Prision
 	 * @see model.AbstractTile#tileRule(model.Player)
 	 */
 	@Override
-	public void tileRule( final Player player )
+	public void tileRule( final Integer playerId )
 	{
+		final List<Integer> lastRoll = Dice.getDie();
+		ApplyRules.checkPlayerFreed(lastRoll, playerId);
 	}
 
 }

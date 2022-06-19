@@ -12,6 +12,15 @@ import enums.BuildingEnum;
 class Building
 {
 
+	public Building(Integer boardPosition, BuildingEnum buildingType, Player owner, Long price,  AbstractTile property)
+	{
+		setBoardPosition(boardPosition);
+		setBuildingType(buildingType);
+		setOwner(owner);
+		setPrice(price);
+		setProperty(property);
+	}
+
 	/**
 	 * <p>
 	 * </p>
@@ -58,30 +67,6 @@ class Building
 	public Player getOwner()
 	{
 		return this.owner;
-	}
-
-	/**
-	 * <p>
-	 * </p>
-	 *
-	 * @return Returns the positionX.
-	 * @see #positionX
-	 */
-	public Double getPositionX()
-	{
-		return this.positionX;
-	}
-
-	/**
-	 * <p>
-	 * </p>
-	 *
-	 * @return Returns the positionY.
-	 * @see #positionY
-	 */
-	public Double getPositionY()
-	{
-		return this.positionY;
 	}
 
 	/**
@@ -164,32 +149,6 @@ class Building
 	 * <p>
 	 * </p>
 	 *
-	 * @param positionX
-	 *            The positionX to set.
-	 * @see #positionX
-	 */
-	public void setPositionX( final Double positionX )
-	{
-		this.positionX = positionX;
-	}
-
-	/**
-	 * <p>
-	 * </p>
-	 *
-	 * @param positionY
-	 *            The positionY to set.
-	 * @see #positionY
-	 */
-	public void setPositionY( final Double positionY )
-	{
-		this.positionY = positionY;
-	}
-
-	/**
-	 * <p>
-	 * </p>
-	 *
 	 * @param price
 	 *            The price to set.
 	 * @see #price
@@ -219,10 +178,6 @@ class Building
 	private Integer id;
 
 	private Player owner;
-
-	private Double positionX;
-
-	private Double positionY;
 
 	private Long price;
 

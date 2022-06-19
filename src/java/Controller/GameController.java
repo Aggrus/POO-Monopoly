@@ -1,5 +1,6 @@
 package Controller;
 
+import model.ApplyRules;
 import model.Game;
 
 public class GameController {
@@ -12,6 +13,11 @@ public class GameController {
             game_controller = new GameController();
         } 
         return game_controller;
+    }
+
+    public static void createPlayers()
+    {
+        ApplyRules.createPlayers();
     }
 
 }

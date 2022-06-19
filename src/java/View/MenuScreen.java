@@ -13,6 +13,11 @@ class MenuScreen extends JPanel implements MouseListener {
     private static int window_height;
     private static boolean new_game = false;
     private Image background_img, box_img;
+    private final Integer initPosX = 712;
+    private final Integer initPosY = 170;
+    private final Integer boxWidth = 220;
+    private final Integer boxHeight = 50;
+    private final Integer boxBufferHeight = 30;
 
     private static MenuScreen menu_screen = null;
 
@@ -55,7 +60,7 @@ class MenuScreen extends JPanel implements MouseListener {
             box_img = ImageIO.read(new File("src/java/data/box.png"));
         }
         catch (IOException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
             System.exit(1);
         }
     }
@@ -72,13 +77,13 @@ class MenuScreen extends JPanel implements MouseListener {
         draw_alligned_header(g2d, "Começar jogo:", header_font, Color.WHITE, 140);
 
         //Desenha a caixa da opção para iniciar novo jogo
-        Rectangle2D rect_newgame = new Rectangle2D.Double(712, 170, 220, 50);
+        Rectangle2D rect_newgame = new Rectangle2D.Double(initPosX, initPosY, boxWidth, boxHeight);
         g2d.setPaint(Color.WHITE);
         g2d.fill(rect_newgame);
         draw_str_in_rect(g2d, "Novo Jogo", gamemode_font, Color.BLACK, rect_newgame);    
 
         //Desenha a caixa da opção para carregar jogo
-        Rectangle2D rect3 = new Rectangle2D.Double(712, 250, 220, 50);
+        Rectangle2D rect3 = new Rectangle2D.Double(initPosX, initPosY + boxHeight + boxBufferHeight, boxWidth, boxHeight);
         g2d.setPaint(Color.WHITE);
         g2d.fill(rect3);
         draw_str_in_rect(g2d, "Carregar Jogo", gamemode_font, Color.BLACK, rect3); 
@@ -89,31 +94,31 @@ class MenuScreen extends JPanel implements MouseListener {
         //Desenha o cabeçalho "Novo Jogo"
         draw_alligned_header(g2d, "Novo Jogo:", header_font, Color.WHITE, 140);
 
-        Rectangle2D rect_2players = new Rectangle2D.Double(712, 170, 220, 50);
+        Rectangle2D rect_2players = new Rectangle2D.Double(initPosX, initPosY, boxWidth, boxHeight);
         g2d.setPaint(Color.WHITE);
         g2d.fill(rect_2players);
         draw_str_in_rect(g2d, "2 Jogadores", gamemode_font, Color.BLACK, rect_2players);    
         
         //Desenha a caixa da opção para 3 jogadores
-        Rectangle2D rect_3players = new Rectangle2D.Double(712, 250, 220, 50);
+        Rectangle2D rect_3players = new Rectangle2D.Double(initPosX, initPosY + boxHeight + boxBufferHeight, boxWidth, boxHeight);
         g2d.setPaint(Color.WHITE);
         g2d.fill(rect_3players);
         draw_str_in_rect(g2d, "3 Jogadores", gamemode_font, Color.BLACK, rect_3players);    
 
         //Desenha a caixa da opção para 4 jogadores
-        Rectangle2D rect_4players = new Rectangle2D.Double(712, 330, 220, 50);
+        Rectangle2D rect_4players = new Rectangle2D.Double(initPosX, initPosY + 2*(boxHeight + boxBufferHeight), boxWidth, boxHeight);
         g2d.setPaint(Color.WHITE);
         g2d.fill(rect_4players);
         draw_str_in_rect(g2d, "4 Jogadores", gamemode_font, Color.BLACK, rect_4players);    
 
         //Desenha a caixa da opção para 5 jogadores
-        Rectangle2D rect_5players = new Rectangle2D.Double(712, 410, 220, 50);
+        Rectangle2D rect_5players = new Rectangle2D.Double(initPosX, initPosY + 3*(boxHeight + boxBufferHeight), boxWidth, boxHeight);
         g2d.setPaint(Color.WHITE);
         g2d.fill(rect_5players);
         draw_str_in_rect(g2d, "5 Jogadores", gamemode_font, Color.BLACK, rect_5players);    
 
         //Desenha a caixa da opção para 6 jogadores
-        Rectangle2D rect_6players = new Rectangle2D.Double(712, 490, 220, 50);
+        Rectangle2D rect_6players = new Rectangle2D.Double(initPosX, initPosY + 4*(boxHeight + boxBufferHeight), boxWidth, boxHeight);
         g2d.setPaint(Color.WHITE);
         g2d.fill(rect_6players);
         draw_str_in_rect(g2d, "6 Jogadores", gamemode_font, Color.BLACK, rect_6players);    
@@ -143,33 +148,33 @@ class MenuScreen extends JPanel implements MouseListener {
         int x = e.getX(), y = e.getY();
 
         System.out.printf("x = %d\ny = %d\n", x, y);
-
+        
         if (new_game == true) { 
-            if (x >= 712 && x <= 712 + 220) {
-                if (y >= 170 && y <= 170 + 50) {    // Clique na caixa de opção de 2 jogadores
+            if (x >= initPosX && x <= initPosX + boxWidth) {
+                if (y >= initPosY && y <= initPosY + boxHeight) {    // Clique na caixa de opção de 2 jogadores
                     MenuController.getInstance().set_num_players(2);
                 }
-                else if (y >= 250 && y <= 250 + 50) {    // Clique na caixa de opção de 2 jogadores
+                else if (y >= initPosY + boxHeight + boxBufferHeight && y <= initPosY + 2*boxHeight + boxBufferHeight) {    // Clique na caixa de opção de 3 jogadores
                     MenuController.getInstance().set_num_players(3);
                 }
-                else if (y >= 330 && y <= 330 + 50) {    // Clique na caixa de opção de 2 jogadores
+                else if (y >= initPosY + 2*(boxHeight + boxBufferHeight) && y <= initPosY + 3*boxHeight + 2*boxBufferHeight) {    // Clique na caixa de opção de 4 jogadores
                     MenuController.getInstance().set_num_players(4);
                 }
-                else if (y >= 410 && y <= 410 + 50) {    // Clique na caixa de opção de 2 jogadores
+                else if (y >= initPosY + 3*(boxHeight + boxBufferHeight) && y <= initPosY + 4*boxHeight + 3*boxBufferHeight + boxHeight) {    // Clique na caixa de opção de 5 jogadores
                     MenuController.getInstance().set_num_players(5);
                 }
-                else if (y >= 490 && y <= 490 + 50) {    // Clique na caixa de opção de 2 jogadores
+                else if (y >= initPosY + 4*(boxHeight + boxBufferHeight) && y <= initPosY + 5*boxHeight + 4*boxBufferHeight + boxHeight) {    // Clique na caixa de opção de 6 jogadores
                     MenuController.getInstance().set_num_players(6);
                 }
             }
         }
         else {
-            if (x >= 712 && x <= 712 + 220) {    // Clique na caixa de opção de iniciar novo jogo
-                if (y >= 170 && y <= 170 + 50) {
+            if (x >= initPosX && x <= initPosX + boxWidth) {    // Clique na caixa de opção de iniciar novo jogo
+                if (y >= initPosY && y <= initPosY + boxHeight) {
                     new_game = true;
                     repaint();
                 }
-                // else if (y >= 250 && y <= 250 + 50) {    // Clique na caixa de opção de carregar jogo
+                // else if (y >= 250 && y <= 250 + boxHeight) {    // Clique na caixa de opção de carregar jogo
                    // futuras operações para carregamento de jogo
                 // }
             }    

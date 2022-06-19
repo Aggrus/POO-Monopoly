@@ -13,8 +13,9 @@ class GoToPrision
 	extends AbstractTile
 {
 
-	public GoToPrision()
+	public GoToPrision(Integer boardPosition)
 	{
+		setBoardPosition(boardPosition);
 		setOwner( null );
 		setCanPurchase( false );
 		setGorup( null );
@@ -30,9 +31,11 @@ class GoToPrision
 	 * @see model.AbstractTile#tileRule(model.Player)
 	 */
 	@Override
-	public void tileRule( final Player player )
+	public void tileRule( final Integer playerId )
 	{
+		Player player = Game.getPlayerList().get(playerId);
 		player.setInPrision( true );
+		player.setBoardPosition(10);
 	}
 
 }

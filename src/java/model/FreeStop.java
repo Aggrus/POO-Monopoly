@@ -16,9 +16,11 @@ class FreeStop
 	/**
 	 * <p>
 	 * </p>
+	 * @param boardPosition 
 	 */
-	public FreeStop()
+	public FreeStop(Integer boardPosition)
 	{
+		setBoardPosition(boardPosition);
 		setCanPurchase( false );
 		setGorup( null );
 		setOwner( null );
@@ -34,7 +36,6 @@ class FreeStop
 	 * @see model.AbstractTile#tileRule(model.Player)
 	 */
 	@Override
-	public void tileRule( final Player player )
-	{
-	}
+	public void tileRule( final Integer playerId )
+	{}
 }

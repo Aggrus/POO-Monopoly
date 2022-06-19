@@ -35,8 +35,9 @@ class StartTile
 	 * @see model.AbstractTile#tileRule(model.Player)
 	 */
 	@Override
-	public void tileRule( final Player player )
+	public void tileRule( final Integer playerId )
 	{
+		Player player = Game.getPlayerList().get(playerId);
 		player.setRoundTrips( player.getRoundTrips() + 1 );
 	}
 
