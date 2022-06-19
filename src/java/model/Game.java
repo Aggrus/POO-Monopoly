@@ -27,6 +27,12 @@ public class Game
 
 	private static List<AbstractTile> tiles;
 
+	private static AbstractCard drawnCard;
+
+	public static AbstractCard getDrawnCard() {
+		return drawnCard;
+	}
+
 	private Game()
 	{
 		createEmptyDeck();
@@ -149,11 +155,17 @@ public class Game
 		tiles = board;
 	}
 
+	public static void setDrawnCard()
+	{
+
+		drawnCard = DrawCardTile.getDrawnCard();
+	}
+
 	@Override
 	public void add( final Observer o )
 	{
 		this.observadores.add( o );
-		o.notify( getNumPlayers() );
+		o.notifyNumPlayers( getNumPlayers() );
 	}
 
 	// implementações do design patter Observer
@@ -165,5 +177,12 @@ public class Game
 	}
 
 	private List<Observer> observadores = new ArrayList<Observer>();
+
+	@Override
+	public void update(Observer o) 
+	{
+		o.notifyNumPlayers( getNumPlayers() );
+		
+	}
 
 }

@@ -9,5 +9,5 @@ package enums;
  */
 public enum TileColorEnum
 {
-	BLUE, BROWN, GREEN, ORANGE, PINK, RED, YELLOW;
+	PINK, BLUE, PURPLE, ORANGE, PUMPKIN_ORANGE, YELLOW, GREEN, DEEP_PURPLE;
 }

@@ -16,9 +16,11 @@ class TaxesTile
 	/**
 	 * <p>
 	 * </p>
+	 * @param boardPosition 
 	 */
-	public TaxesTile()
+	public TaxesTile(Integer boardPosition)
 	{
+		setBoardPosition(boardPosition);
 		setCanPurchase( false );
 		setGorup( null );
 		setOwner( null );
@@ -34,8 +36,9 @@ class TaxesTile
 	 * @see model.AbstractTile#tileRule(model.Player)
 	 */
 	@Override
-	public void tileRule( final Player player )
+	public void tileRule( final Integer playerId )
 	{
+		Player player = Game.getPlayerList().get(playerId);
 		player.loseMoney( getValue() );
 	}
 }

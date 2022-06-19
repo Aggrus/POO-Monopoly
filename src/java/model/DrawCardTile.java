@@ -19,9 +19,11 @@ class DrawCardTile
 	/**
 	 * <p>
 	 * </p>
+	 * @param boardPosition 
 	 */
-	public DrawCardTile()
+	public DrawCardTile(Integer boardPosition)
 	{
+		setBoardPosition(boardPosition);
 		setCanPurchase( false );
 		setGorup( null );
 		setOwner( null );
@@ -29,14 +31,14 @@ class DrawCardTile
 		setValue( Long.valueOf( 0 ) );
 	}
 
-	public AbstractCard getDrawnCard()
+	public static AbstractCard getDrawnCard()
 	{
-		return this.drawnCard;
+		return drawnCard;
 	}
 
 	protected void setDrawnCard( final AbstractCard drawnCard )
 	{
-		this.drawnCard = drawnCard;
+		DrawCardTile.drawnCard = drawnCard;
 	}
 
 	/**
@@ -47,8 +49,9 @@ class DrawCardTile
 	 * @see model.AbstractTile#tileRule(model.Player)
 	 */
 	@Override
-	public void tileRule( final Player player )
+	public void tileRule( final Integer playerId )
 	{
+		Player player = Game.getPlayerList().get(playerId);
 		final List<AbstractCard> deck = Game.getCards();
 		final Random card = new Random();
 		final AbstractCard curCard = deck.get( card.nextInt( Game.getCards().size() - 1 ) );
@@ -61,6 +64,6 @@ class DrawCardTile
 		}
 	}
 
-	private AbstractCard drawnCard;
+	public static AbstractCard drawnCard;
 
 }

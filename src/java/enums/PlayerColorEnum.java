@@ -9,6 +9,17 @@ package enums;
  */
 public enum PlayerColorEnum
 {
-	BLUE, GREY, ORANGE, PURPLE, RED, YELLOW;
+	RED(0), BLUE(1), ORANGE(2), YELLOW(3), PURPLE(4),  GREY(5);
 
+	private Integer index;
+
+	PlayerColorEnum( final Integer index )
+	{
+		this.index = index;
+	}
+
+	public Integer getIndex()
+	{
+		return this.index;
+	}
 }

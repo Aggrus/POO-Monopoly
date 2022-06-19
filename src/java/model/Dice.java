@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -18,6 +19,17 @@ class Dice
 	final private static Integer diceSize = 6;
 
 	private static Integer diceTwo;
+
+	private static List<Integer> die;
+
+	//Get last dice roll
+	public static List<Integer> getDie() {
+		return die;
+	}
+	//Set last dice roll
+	private static void setDie(List<Integer> die) {
+		Dice.die = die;
+	}
 
 	/**
 	 * <p>
@@ -42,6 +54,7 @@ class Dice
 		{
 			roll.addAll( simpleRoll() );
 		}
+		setDie(roll);
 		return roll;
 	}
 
@@ -64,6 +77,7 @@ class Dice
 		dice.add( diceTwo );
 
 		diceOne = diceTwo = 0;
+		setDie(dice);
 		return dice;
 	}
 

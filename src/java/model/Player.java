@@ -1,5 +1,11 @@
 package model;
 
+import java.util.List;
+import java.util.Optional;
+
+import Controller.Observer.Observable;
+import Controller.Observer.Observer;
+import Controller.Observer.PlayerObserver;
 import enums.PlayerColorEnum;
 
 /**
@@ -10,28 +16,43 @@ import enums.PlayerColorEnum;
  * @version 1.0 Created on May 8, 2022
  */
 class Player
+	implements Observable
 {
 
 	public Player()
 	{
 		this.money = Long.valueOf( 4000 );
 		this.inGame = true;
-		this.boardPosition = 0;
+		this.boardPosition = 11;
 		this.inPrision = false;
 		this.prisionTime = 0;
 		this.roundTrips = 0;
+		this.freeRide = false;
 	}
 
-	public Player( final Double positionX, final Double positionY )
+	public Player( final PlayerColorEnum color )
 	{
+		this.color = color;
 		this.money = Long.valueOf( 4000 );
-		this.positionX = positionX;
-		this.positionY = positionY;
 		this.inGame = true;
-		this.boardPosition = 0;
+		this.boardPosition = 33;
 		this.inPrision = false;
 		this.prisionTime = 0;
 		this.roundTrips = 0;
+		this.freeRide = false;
+	}
+
+	@Override
+	public void add( final Observer o )
+	{
+		this.observer.add( ( PlayerObserver ) o );
+		this.observer.get( this.observer.size() - 1 ).notifyFreeRide( this.freeRide );
+		this.observer.get( this.observer.size() - 1 ).notifyInPrision( this.inPrision );
+		this.observer.get( this.observer.size() - 1 ).nofityBoardPosition( this.boardPosition );
+		this.observer.get( this.observer.size() - 1 ).nofityColor( this.color );
+		this.observer.get( this.observer.size() - 1 ).notifyMoney( this.money );
+		this.observer.get( this.observer.size() - 1 ).notifyPrisionTime( this.prisionTime );
+		this.observer.get( this.observer.size() - 1 ).notifyRoundTrips( this.roundTrips );
 	}
 
 	public void addPriosionTime()
@@ -73,30 +94,6 @@ class Player
 	public Long getMoney()
 	{
 		return this.money;
-	}
-
-	/**
-	 * <p>
-	 * </p>
-	 *
-	 * @return Returns the positionX.
-	 * @see #positionX
-	 */
-	public Double getPositionX()
-	{
-		return this.positionX;
-	}
-
-	/**
-	 * <p>
-	 * </p>
-	 *
-	 * @return Returns the positionY.
-	 * @see #positionY
-	 */
-	public Double getPositionY()
-	{
-		return this.positionY;
 	}
 
 	/**
@@ -175,6 +172,12 @@ class Player
 		{
 			setInGame( false );
 		}
+	}
+
+	@Override
+	public void remove( final Observer o )
+	{
+		this.observer.remove( o );
 	}
 
 	public void resetPrisionTime()
@@ -264,32 +267,6 @@ class Player
 	 * <p>
 	 * </p>
 	 *
-	 * @param positionX
-	 *            The positionX to set.
-	 * @see #positionX
-	 */
-	public void setPositionX( final Double positionX )
-	{
-		this.positionX = positionX;
-	}
-
-	/**
-	 * <p>
-	 * </p>
-	 *
-	 * @param positionY
-	 *            The positionY to set.
-	 * @see #positionY
-	 */
-	public void setPositionY( final Double positionY )
-	{
-		this.positionY = positionY;
-	}
-
-	/**
-	 * <p>
-	 * </p>
-	 *
 	 * @param roundTrips
 	 *            The roundTrips to set.
 	 * @see #roundTrips
@@ -297,6 +274,26 @@ class Player
 	public void setRoundTrips( final Integer roundTrips )
 	{
 		this.roundTrips = roundTrips;
+	}
+
+	@Override
+	public void update( final Observer o )
+	{
+		final Optional<PlayerObserver> observerFromList = this.observer
+			.stream()
+			.filter( obs -> obs.equals( o ) )
+			.findAny();
+		if ( observerFromList.isPresent() )
+		{
+			observerFromList.get().notifyFreeRide( this.freeRide );
+			observerFromList.get().notifyInPrision( this.inPrision );
+			observerFromList.get().nofityBoardPosition( this.boardPosition );
+			observerFromList.get().nofityColor( this.color );
+			observerFromList.get().notifyMoney( this.money );
+			observerFromList.get().notifyPrisionTime( this.prisionTime );
+			observerFromList.get().notifyRoundTrips( this.roundTrips );
+		}
+
 	}
 
 	private Integer boardPosition;
@@ -311,9 +308,7 @@ class Player
 
 	private Long money;
 
-	private Double positionX;
-
-	private Double positionY;
+	private List<PlayerObserver> observer;
 
 	private Integer prisionTime;
 

@@ -33,6 +33,7 @@ class PrisionCard
 	void cardRule( final Player player )
 	{
 		player.setInPrision( true );
+		player.setBoardPosition(10);
 	}
 
 }
