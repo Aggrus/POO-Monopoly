@@ -8,10 +8,9 @@ import model.ApplyRules;
 class PlayerView
 {
 
-	public static List<Integer> getPlayerPos( final Integer playerNum )
+	public static List<Integer> getPlayerPos( final Integer playerNum, final Integer boardPos )
 	{
 		final List<Integer> position = new ArrayList<Integer>( 2 );
-		final Integer boardPos = ApplyRules.getPlayerPositionByNumber( playerNum );
 		Integer width = BoardView.squareSide, height = BoardView.squareSide;
 		Integer posX = BoardView.posIni - width;
 		Integer posY = BoardView.posIni - height;

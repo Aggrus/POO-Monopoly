@@ -48,13 +48,10 @@ class Player
 	public void add( final Observer o )
 	{
 		this.observer.add( ( PlayerObserver ) o );
-		this.observer.get( this.observer.size() - 1 ).notifyFreeRide( this.freeRide );
-		this.observer.get( this.observer.size() - 1 ).notifyInPrision( this.inPrision );
-		this.observer.get( this.observer.size() - 1 ).nofityBoardPosition( this.boardPosition );
-		this.observer.get( this.observer.size() - 1 ).nofityColor( this.color );
-		this.observer.get( this.observer.size() - 1 ).notifyMoney( this.money );
-		this.observer.get( this.observer.size() - 1 ).notifyPrisionTime( this.prisionTime );
-		this.observer.get( this.observer.size() - 1 ).notifyRoundTrips( this.roundTrips );
+		//this.observer.get( this.observer.size() - 1 ).notifyFreeRide( this.freeRide, this.color.getIndex() );
+		this.observer.get( this.observer.size() - 1 ).nofityBoardPosition( this.boardPosition, this.color.getIndex() );
+		this.observer.get( this.observer.size() - 1 ).notifyMoney( this.money, this.color.getIndex() );
+		this.observer.get( this.observer.size() - 1 ).notifyPrisionTime( this.prisionTime, this.color.getIndex() );
 	}
 
 	public void addPriosionTime()
@@ -355,13 +352,10 @@ class Player
 			.findAny();
 		if ( observerFromList.isPresent() )
 		{
-			observerFromList.get().notifyFreeRide( this.freeRide );
-			observerFromList.get().notifyInPrision( this.inPrision );
-			observerFromList.get().nofityBoardPosition( this.boardPosition );
-			observerFromList.get().nofityColor( this.color );
-			observerFromList.get().notifyMoney( this.money );
-			observerFromList.get().notifyPrisionTime( this.prisionTime );
-			observerFromList.get().notifyRoundTrips( this.roundTrips );
+			//observerFromList.get().notifyFreeRide( this.freeRide , this.color.getIndex());
+			observerFromList.get().nofityBoardPosition( this.boardPosition, this.color.getIndex() );
+			observerFromList.get().notifyMoney( this.money, this.color.getIndex() );
+			observerFromList.get().notifyPrisionTime( this.prisionTime, this.color.getIndex() );
 		}
 
 	}

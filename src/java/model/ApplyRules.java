@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import Exception.IllegalRuleException;
+import View.GameScreen;
+import View.MainFrame;
 import enums.BuildingEnum;
 import enums.PlayerColorEnum;
 import enums.TileColorEnum;
@@ -135,7 +137,10 @@ public class ApplyRules
 		{
 			player.setBoardPosition(10);
 		}
-		
+		for (Player players :  Game.getPlayerList())
+		{
+			players.update(GameScreen.getInstance(MainFrame.WIDTH, MainFrame.HEIGHT, Game.getNumPlayers()));
+		}
 	}
 
 	public static void shuffleDeck()
@@ -304,6 +309,7 @@ public class ApplyRules
 		while (players.size() < Game.getNumPlayers())
 		{
 			players.add(new Player(PlayerColorEnum.values()[players.size()]));
+			players.get(players.size() - 1).add(GameScreen.getInstance(MainFrame.WIDTH, MainFrame.HEIGHT, Game.getNumPlayers()));
 		}
 		//Instantiate a list of players on position 0
 		Game.setPlayerList(players);
